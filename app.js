@@ -141,7 +141,7 @@ app.use('/NHJax-api', function errorHandler(err, req, res, next) {
             req.logger.warn('request timed out');
         } else if (!(err instanceof RequestError) && err.stack) {
             req.logger.error(GENERIC_ERROR + ': ' + err.stack);
-            err = GENERIC_ERROR+ ': '+ err.stack;
+            err = GENERIC_ERROR + ': ' + err.stack;
         }
         var responseBody = buildResponse(err, res);
         req.logger.info('error');
