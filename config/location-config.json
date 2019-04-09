@@ -1,0 +1,10 @@
+{
+	"data":
+	[
+		{"location": "albany", "alertZoneId": "FLC089", "awosStationId": "KFHB"},
+		{"location": "jax", "alertZoneId": "FLC089", "awosStationId": "KFHB"},
+		{"location": "key_west", "alertZoneId": "FLC089", "awosStationId": "KFHB"},
+		{"location": "kings_bay", "alertZoneId": "FLC089", "awosStationId": "KFHB"},
+		{"location": "mayport", "alertZoneId": "FLC089", "awosStationId": "KFHB"}
+	]
+}

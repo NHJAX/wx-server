@@ -1,0 +1,13 @@
+{
+    "nhjax": {
+        "app": {
+            "port": 8080,
+            "ssl": false,
+            "logging": {
+                "file": "nhjax-api-app.log",
+                "console": true,
+                "level": "debug"
+            }
+        }
+    }
+}
