@@ -5,8 +5,11 @@ var mqtt = require('mqtt'); //MQTT Imported
 var firebase = require("firebase"); //Load Firebase Package
 var axios = require("axios");
 var fs = require('fs');
+var path = require('path');
+const WORKING_DIR = path.resolve('../secret-config');
 
-const API_CONFIG = JSON.parse(fs.readFileSync('/Users/alexrangeo/Development/apikey.json','utf8'));
+const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
+
 
 const WAIT_TIME_PARAM = "wait/times"
 

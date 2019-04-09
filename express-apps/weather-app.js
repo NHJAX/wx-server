@@ -3,13 +3,17 @@
 
 var _ = require('underscore');
 var fs = require('fs');
+var path = require('path');
 var express = require('express');
 var appUtil = require('../util/app-util');
 var moment = require('moment');
 var RequestError = require('../util/request-error');
 var request = require('request');
 var firebaseWeather = require("firebase");
-var firebaseWeatherConfig = JSON.parse(fs.readFileSync('/Users/alexrangeo/Development/nmrtcjax-firebase-config.json','utf8'));
+const WORKING_DIR = path.resolve('../secret-config');
+
+const firebaseWeatherConfig = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'nmrtcjax-firebase-config.json')));
+//var firebaseWeatherConfig = JSON.parse(fs.readFileSync('/Users/alexrangeo/Development/nmrtcjax-firebase-config.json','utf8'));
 var locationArray = require('../config/location-config').data;
 
 /* 

@@ -10,7 +10,11 @@ var appUtil = require('./util/app-util.js');
 var logging = require('./util/logging.js');
 var RequestError = require('./util/request-error');
 
-const API_CONFIG = JSON.parse(fs.readFileSync('/Users/alexrangeo/Development/apikey.json','utf8'));
+//var KEY = fs.readFileSync(path.join(__dirname, '/tls-key.pem'))
+//var CERT = fs.readFileSync(path.join(__dirname, '/tls-cert.pem'));
+const WORKING_DIR = path.resolve('../secret-config');
+
+const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
 
 
 var weatherApp = require('./express-apps/weather-app');
