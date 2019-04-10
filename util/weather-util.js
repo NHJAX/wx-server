@@ -3,6 +3,7 @@
 var request = require('request');
 const ADDS = require('adds');
 var moment = require('moment');
+var tz = require('moment-timezone');
 
 const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
 
@@ -184,7 +185,9 @@ module.exports = {
 
     console.log("data", data);
 
-    data.timestamp = moment().format();
+    var timestamp = moment();
+
+    data.timestamp = timestamp.tz('America/New_York').format();
 
     var awosTemp = data['AWOS']['temperature'];
     var boxTempC = data['temperature'];
