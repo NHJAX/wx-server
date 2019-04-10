@@ -66,9 +66,11 @@ server.on('clientConnected', function(client) { //A worker has been detected and
         // console.log(client);
 
         if (client) {
-            var buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
+            // var buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
             let msg = (buf.toString()); //Buffer is converted to string
+            msg = JSON.parse(msg);
             console.log("Message from MQTT ", msg);
+            //var msg = {"location":"jax","temp":"25.0","hum":"39.0"}
             // var msg = { "temperature": 28,"humidity": 69, "location": 'jax'};
             var headers = {
                 'NHJax-API-Key': API_CONFIG["NHJax-API-Key"]
@@ -76,8 +78,8 @@ server.on('clientConnected', function(client) { //A worker has been detected and
             console.log(msg.location);
 
             console.log(msg);
-            console.log(JSON.stringify(msg));
-            console.log(JSON.parse(msg));
+            // console.log(JSON.stringify(msg));
+            // console.log(JSON.parse(msg));
 
             axios({
                     method: "post",
@@ -85,8 +87,8 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                     headers,
                     data: {
                         "location": msg.location,
-                        "temperature": msg.temp,
-                        "humidity": msg.hum
+                        "temperature": Number(msg.temp),
+                        "humidity": Number(msg.hum)
                     }
                 })
                 .then(res => {
