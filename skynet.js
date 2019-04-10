@@ -22,7 +22,7 @@ var settings = { //Server settings
         port: 8883, //Secure MQTT port
         keyPath: SECURE_KEY,
         certPath: SECURE_CERT,
-        allowNonSecure: true //Denies Nonsecure Connections 
+        allowNonSecure: false //Denies Nonsecure Connections 
     }
     //
 };
