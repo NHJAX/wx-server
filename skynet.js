@@ -83,7 +83,10 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                     method: "post",
                     url: API_CONFIG.BASEURL + 'jax',
                     headers,
-                    data: msg
+                    data: {
+                        "location": msg.location,
+                        "temperature": msg.temp,
+                        "humidity": msg.hum
                 })
                 .then(res => {
                     console.log('res');

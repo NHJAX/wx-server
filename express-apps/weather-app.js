@@ -36,8 +36,8 @@ weatherApp.post('/:location', [
 
         var location = req.params.location;
         var body = req.body;
-        console.log(location);
-        console.log(body);
+        console.log('location', location);
+        console.log('body', body);
 
         let locationObj = locationArray.find(o => o.location === location);
 
