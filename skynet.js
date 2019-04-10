@@ -81,10 +81,10 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                     data: msg
                 })
                 .then(res => {
-                    console.log(res);
+                    console.log('res');
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log('err');
                 })
         };
     });
