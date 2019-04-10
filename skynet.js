@@ -1,4 +1,4 @@
-var mosca = require('mosca'); //MOSCA Imported
+var mosca = require('MOSCA'); //MOSCA Imported
 var mqtt = require('mqtt'); //MQTT Imported
 var firebase = require("firebase"); //Load Firebase Package
 var axios = require("axios");
@@ -12,7 +12,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // trust self signed certificate
 
 var client = mqtt.connect('mqtts://localhost'); //IP of the machine which the server is hosted
 var SECURE_KEY = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxKey.key'));//__dirname + '/tls-key.pem'; //Location of secure key
-var SECURE_CERT = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxCert.cert'));//__dirname + '/tls-cert.pem'; //Location of Secure Cert
+var SECURE_CERT = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxCert.crt'));//__dirname + '/tls-cert.pem'; //Location of Secure Cert
 var settings = { //Server settings
     secure: {
         port: 8883, //Secure MQTT port
@@ -71,5 +71,4 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                 })
         };
     });
-
 });
