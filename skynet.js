@@ -1,4 +1,4 @@
-var mosca = require('MOSCA'); //MOSCA Imported
+var mosca = require('mosca'); //MOSCA Imported
 var mqtt = require('mqtt'); //MQTT Imported
 var firebase = require("firebase"); //Load Firebase Package
 var axios = require("axios");
