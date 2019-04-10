@@ -87,6 +87,7 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                         "location": msg.location,
                         "temperature": msg.temp,
                         "humidity": msg.hum
+                    }
                 })
                 .then(res => {
                     console.log('res');
