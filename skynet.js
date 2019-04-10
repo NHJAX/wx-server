@@ -4,24 +4,28 @@ var firebase = require("firebase"); //Load Firebase Package
 var axios = require("axios");
 var fs = require('fs');
 var path = require('path');
+
 const WORKING_DIR = path.resolve('../secret-config');
+const CERT_DIR = path.join(WORKING_DIR,'certs');
+
 const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
 const WAIT_TIME_PARAM = "wait/times"
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // trust self signed certificate
 
 var client = mqtt.connect('mqtts://192.168.1.3'); //IP of the machine which the server is hosted
-var SECURE_KEY = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxKey.pem'));//__dirname + '/tls-key.pem'; //Location of secure key
-var SECURE_CERT = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxCert.pem'));//__dirname + '/tls-cert.pem'; //Location of Secure Cert
+var SECURE_KEY = path.join(WORKING_DIR, 'certs' + '/wxKey.pem');//Location of secure key - path to key only, DO NOT READ THE KEY
+var SECURE_CERT = path.join(WORKING_DIR, 'certs' + '/wxCert.pem');//Location of Secure Cert - path to key only, DO NOT READ THE CERT
 
 var settings = { //Server settings
     port: 1883,
     secure: {
         port: 8883, //Secure MQTT port
         keyPath: SECURE_KEY,
-        certPath: SECURE_CERT   
-    },
-    allowNonSecure: true //Denies Nonsecure Connections
+        certPath: SECURE_CERT,
+        allowNonSecure: true //Denies Nonsecure Connections 
+    }
+    //
 };
 //Server Setup
 var server = new mosca.Server(settings);
