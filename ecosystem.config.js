@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'Weather-API - WX Server',
-    script: 'node ./app.js',
+    script: 'node app.js',
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     instances: 1,
     autorestart: true,
@@ -16,7 +16,7 @@ module.exports = {
   },
   {
     name: 'Skynet - WX Server',
-    script: 'node ./skynet.js',
+    script: 'node skynet.js',
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     instances: 1,
     autorestart: true,
