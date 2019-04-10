@@ -73,10 +73,15 @@ server.on('clientConnected', function(client) { //A worker has been detected and
             var headers = {
                 'NHJax-API-Key': API_CONFIG["NHJax-API-Key"]
             };
+            console.log(msg.location);
+
+            console.log(msg);
+            console.log(JSON.stringify(msg));
+            console.log(JSON.parse(msg));
 
             axios({
                     method: "post",
-                    url: API_CONFIG.BASEURL + msg.location,
+                    url: API_CONFIG.BASEURL + 'jax',
                     headers,
                     data: msg
                 })
