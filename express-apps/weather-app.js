@@ -59,10 +59,12 @@ weatherApp.post('/:location', [
                 var currentRef = db.collection('jaxWeather');
                 currentRef.add(weatherData)
                     .then(ref => {
-                        console.log("this is the ref", ref);
+                        //console.log("this is the ref", ref);
                         if (ref) {
+                            console.log('ref good');
                             return res.sendStatus(200);
                         } else {
+                            console.log('ref error');
                             return res.sendStatus(500);
                         }
                     })
