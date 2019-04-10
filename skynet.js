@@ -12,7 +12,7 @@ const WAIT_TIME_PARAM = "wait/times"
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // trust self signed certificate
 
-var client = mqtt.connect('mqtts://192.168.1.3'); //IP of the machine which the server is hosted
+var client = mqtt.connect('mqtts://192.168.1.2'); //IP of the machine which the server is hosted
 var SECURE_KEY = path.join(WORKING_DIR, 'certs' + '/wxKey.pem');//Location of secure key - path to key only, DO NOT READ THE KEY
 var SECURE_CERT = path.join(WORKING_DIR, 'certs' + '/wxCert.pem');//Location of Secure Cert - path to key only, DO NOT READ THE CERT
 
