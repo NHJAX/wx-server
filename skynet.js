@@ -1,5 +1,3 @@
-//TODO: PLACE FILES ON SERVER AND UPDATE THE CONFIG POINTER
-
 var mosca = require('mosca'); //MOSCA Imported
 var mqtt = require('mqtt'); //MQTT Imported
 var firebase = require("firebase"); //Load Firebase Package
@@ -7,34 +5,22 @@ var axios = require("axios");
 var fs = require('fs');
 var path = require('path');
 const WORKING_DIR = path.resolve('../secret-config');
-
 const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
-
-
 const WAIT_TIME_PARAM = "wait/times"
-
-
-
-
-
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // trust self signed certificate
 
 var client = mqtt.connect('mqtts://localhost'); //IP of the machine which the server is hosted
-// var SECURE_KEY = __dirname + '/tls-key.pem'; //Location of secure key
-// var SECURE_CERT = __dirname + '/tls-cert.pem'; //Location of Secure Cert
-
-
+var SECURE_KEY = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxKey.key'));//__dirname + '/tls-key.pem'; //Location of secure key
+var SECURE_CERT = fs.readFileSync(path.join(WORKING_DIR, 'certs', 'wxCert.cert'));//__dirname + '/tls-cert.pem'; //Location of Secure Cert
 var settings = { //Server settings
     secure: {
         port: 8883, //Secure MQTT port
-        // keyPath: SECURE_KEY,
-        // certPath: SECURE_CERT,
+        keyPath: SECURE_KEY,
+        certPath: SECURE_CERT,
         allowNonSecure: true //Denies Nonsecure Connections
     }
 };
-
-
 //Server Setup
 var server = new mosca.Server(settings);
 
@@ -66,14 +52,7 @@ server.on('clientConnected', function(client) { //A worker has been detected and
             var buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
             let msg = (buf.toString()); //Buffer is converted to string
             console.log("Message from MQTT ", msg);
-
-
-
-            // var msg = {
-            //     "temperature": 28,
-            //     "humidity": 69,
-            //     "location": 'jax'
-            // };
+            // var msg = { "temperature": 28,"humidity": 69, "location": 'jax'};
             var headers = {
                 'NHJax-API-Key': API_CONFIG["NHJax-API-Key"]
             };
@@ -90,8 +69,6 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                 .catch(err => {
                     console.log(err);
                 })
-
-
         };
     });
 
