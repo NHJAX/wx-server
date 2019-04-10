@@ -66,7 +66,7 @@ server.on('clientConnected', function(client) { //A worker has been detected and
         // console.log(client);
 
         if (client) {
-            // var buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
+            var buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
             let msg = (buf.toString()); //Buffer is converted to string
             msg = JSON.parse(msg);
             console.log("Message from MQTT ", msg);
