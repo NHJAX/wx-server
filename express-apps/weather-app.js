@@ -54,7 +54,9 @@ weatherApp.post('/:location', [
         postData()
             .then((weatherData) => {
 
-                var currentRef = db.collection('jaxWeather');
+
+
+                var currentRef = db.collection(weatherData.MQTT_TOPIC);
                 currentRef.add(weatherData)
                     .then(ref => {
                         if (ref) {
@@ -72,6 +74,26 @@ weatherApp.post('/:location', [
             .catch((error) => {
                 return res.sendStatus(500);
             });
+    }
+]);
+
+weatherApp.post('/lightning/:location', [
+    function(req,res,next) {
+        var body = req.body;
+        var location = req.params.location;
+        console.log(body);
+
+        var currentRef = db.collection(location+"lightning");
+
+        currentRef.add(body)
+            .then(ref => {
+                if (!res.error) {
+                    return res.sendStatus(200);
+                } else {
+                    return res.send(500);
+                }
+            });
+
     }
 ]);
 

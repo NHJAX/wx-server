@@ -33,8 +33,6 @@ var readyFunc = function(){
     console.log('inside ready');
     server.on('clientConnected', clientConnectedFunc);
     server.on('published', publishedFunc);
-    server.on('clientDisconnecting', clientDisconnectingFunc);
-    server.on('clientDisconnectedFunc', clientConnectedFunc);
 
 };
 var clientConnectedFunc = function(client){
@@ -61,7 +59,7 @@ var publishedFunc = function(packet, client){
 
             axios({
                     method: "post",
-                    url: API_CONFIG.BASEURL + 'jax',
+                    url: API_CONFIG.BASEURL + msg.MQTT_TOPIC,
                     headers,
                     data: {
                         "location": msg.location,
