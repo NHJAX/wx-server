@@ -44,8 +44,8 @@ var publishedFunc = function(packet, client) {
     if (client) {
         let buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
 
-        let msg = (buf.toString()); //Buffer is converted to string
-        // msg = JSON.parse(msg);
+        let msg = buf.toString(); //Buffer is converted to string
+        msg = JSON.parse(msg);
 
         console.log("Message from MQTT ", msg);
         let headers = {
