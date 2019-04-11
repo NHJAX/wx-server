@@ -12,9 +12,7 @@ module.exports = {
   weatherAPIPromiseAll: function(locObj,weatherDataBody) {
     console.log(locObj, weatherDataBody); 
 
-    
-    //console.log(locObj);
-    return Promise.all([
+      return Promise.all([
         ADDS('metars', {
           stationString: locObj.awosStationId, //NAS JAX ICAO
           hoursBeforeNow: 1

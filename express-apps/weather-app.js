@@ -1,5 +1,4 @@
 'use strict';
-//TODO: PLACE FILES ON SERVER AND UPDATE THE CONFIG POINTER
 
 var _ = require('underscore');
 var fs = require('fs');
@@ -13,7 +12,6 @@ var firebaseWeather = require("firebase");
 const WORKING_DIR = path.resolve('../secret-config');
 
 const firebaseWeatherConfig = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'nmrtcjax-firebase-config.json')));
-//var firebaseWeatherConfig = JSON.parse(fs.readFileSync('/Users/alexrangeo/Development/nmrtcjax-firebase-config.json','utf8'));
 var locationArray = require('../config/location-config').data;
 
 /* 
@@ -59,7 +57,6 @@ weatherApp.post('/:location', [
                 var currentRef = db.collection('jaxWeather');
                 currentRef.add(weatherData)
                     .then(ref => {
-                        //console.log("this is the ref", ref);
                         if (ref) {
                             console.log('ref good');
                             return res.sendStatus(200);

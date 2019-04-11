@@ -29,6 +29,68 @@ var settings = { //Server settings
 //Server Setup
 var server = new mosca.Server(settings);
 
+var readyFunc = function(){
+    console.log('inside ready');
+    server.on('clientConnected', clientConnectedFunc);
+    server.on('published', publishedFunc);
+    server.on('clientDisconnecting', clientDisconnectingFunc);
+    server.on('clientDisconnectedFunc', clientConnectedFunc);
+
+};
+var clientConnectedFunc = function(client){
+    console.log('inside client connected');
+};
+var publishedFunc = function(packet, client){
+    console.log('inside published');
+
+    if (client) {
+            var buf = (Buffer.from(packet.payload)); //Buffer is dumped from packet
+            let msg = (buf.toString()); //Buffer is converted to string
+            msg = JSON.parse(msg);
+            console.log("Message from MQTT ", msg);
+            //var msg = {"location":"jax","temp":"25.0","hum":"39.0"}
+            // var msg = { "temperature": 28,"humidity": 69, "location": 'jax'};
+            var headers = {
+                'NHJax-API-Key': API_CONFIG["NHJax-API-Key"]
+            };
+            console.log(msg.location);
+
+            console.log(msg);
+            // console.log(JSON.stringify(msg));
+            // console.log(JSON.parse(msg));
+
+            axios({
+                    method: "post",
+                    url: API_CONFIG.BASEURL + 'jax',
+                    headers,
+                    data: {
+                        "location": msg.location,
+                        "temperature": Number(msg.temp),
+                        "humidity": Number(msg.hum)
+                    }
+                })
+                .then(res => {
+                    console.log('res');
+                })
+                .catch(err => {
+                    console.log('err');
+                })
+        };
+
+
+    client.close();
+};
+var clientDisconnectingFunc = function(){
+    console.log('inside client disconnecting');
+};
+var clientDisconnectedFunc = function(){
+    console.log('inside client disconnected');
+};
+
+server.on('ready', readyFunc);
+/*
+
+
 //Server Init
 server.on('ready', function() { //Server is ready for messages
     console.log('ready');
@@ -99,4 +161,5 @@ server.on('clientConnected', function(client) { //A worker has been detected and
                 })
         };
     });
-});
+    */
+// });
