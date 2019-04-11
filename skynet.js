@@ -75,10 +75,11 @@ var publishedFunc = function(packet, client){
                 .catch(err => {
                     console.log('err');
                 })
+                client.close();
         };
 
 
-    client.close();
+    
 };
 var clientDisconnectingFunc = function(){
     console.log('inside client disconnecting');
