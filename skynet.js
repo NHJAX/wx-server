@@ -67,7 +67,7 @@ var publishedFunc = function(packet, client) {
 
         axios({
                 method: "post",
-                url: API_CONFIG.BASEURL + msg.MQTT_TOPIC,
+                url: API_CONFIG.BASEURL + msg.location,
                 headers,
                 data
             })
