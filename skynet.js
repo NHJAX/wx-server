@@ -54,8 +54,8 @@ var publishedFunc = function(packet, client) {
         console.log(msg.location);
 
         //console.log(msg);
-        console.log(JSON.stringify(msg));
-        console.log(JSON.parse(msg));
+        // console.log(JSON.stringify(msg));
+        // console.log(JSON.parse(msg));
 
         let data = {
             "location": msg.location,
