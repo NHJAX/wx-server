@@ -75,7 +75,7 @@ var publishedFunc = function(packet, client) {
                 console.log('res');
             })
             .catch(err => {
-                console.log('err');
+                console.log('err', err);
             })
         client.close();
     };
