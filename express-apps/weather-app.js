@@ -56,7 +56,7 @@ weatherApp.post('/:location', [
 
 
 
-                var currentRef = db.collection(weatherData.MQTT_TOPIC);
+                var currentRef = db.collection(weatherData.location+'Weather');
                 currentRef.add(weatherData)
                     .then(ref => {
                         if (ref) {
