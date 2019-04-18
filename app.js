@@ -38,7 +38,7 @@ config.nhjax.app.logging = _.defaults(config.nhjax.app.logging || {}, {
 
 
 var app = express();
-var port = 8081;
+var port = 8093;
 app.set('x-powered-by', false);
 app.set('Content-Type', 'application/json');
 
