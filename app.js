@@ -24,7 +24,7 @@ var REQUEST_TIMEOUT = 30000; // 30 seconds
 var SECRET_KEY = API_CONFIG["NHJax-API-Key"];
 
 config.nhjax.app = _.defaults(config.nhjax.app || {}, {
-    port: 8080,
+    port: 3000,
     ssl: false
 });
 config.nhjax.app.logging = _.defaults(config.nhjax.app.logging || {}, {
@@ -38,7 +38,7 @@ config.nhjax.app.logging = _.defaults(config.nhjax.app.logging || {}, {
 
 
 var app = express();
-var port = 8093;
+var port = 3000;
 app.set('x-powered-by', false);
 app.set('Content-Type', 'application/json');
 
