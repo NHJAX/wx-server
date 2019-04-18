@@ -49,7 +49,8 @@ module.exports = {
                   });
 
                 } else {
-                  alertArray.push({id:'no active alerts'})
+                  alertArray = [];
+                  // alertArray.push({id:'no active alerts'})
                 }
 
                 resolve(alertArray);
