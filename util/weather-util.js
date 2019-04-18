@@ -186,7 +186,7 @@ module.exports = {
 
     var timestamp = moment();
 
-    data.timestamp = timestamp.tz('America/New_York').format();
+    data.timestamp = timestamp.tz('America/New_York').format("MMM Do YY, HH:MM");
 
     var awosTemp = data['AWOS']['temperature'];
     var boxTempC = data['temperature'];
