@@ -34,8 +34,6 @@ weatherApp.post('/:location', [
 
         var location = req.params.location;
         var body = req.body;
-        console.log('location', location);
-        console.log('body', body);
 
         let locationObj = locationArray.find(o => o.location === location);
 
@@ -47,7 +45,7 @@ weatherApp.post('/:location', [
                 return a;
 
             } catch (err) {
-                console.log(err);
+                console.log('err in post',err);
             }
         };
 
@@ -60,18 +58,20 @@ weatherApp.post('/:location', [
                 currentRef.add(weatherData)
                     .then(ref => {
                         if (ref) {
-                            console.log('ref good');
+                            // console.log('ref good');
                             return res.sendStatus(200);
                         } else {
-                            console.log('ref error');
+                            // console.log('ref error');
                             return res.sendStatus(500);
                         }
                     })
-                    .catch((error) => {
+                    .catch((err) => {
+                        console.log('currentRefPostData', err);
                         return res.sendStatus(500);
                     });
             })
-            .catch((error) => {
+            .catch((err) => {
+                console.log('postDataCatch', err);
                 return res.sendStatus(500);
             });
     }
@@ -81,7 +81,7 @@ weatherApp.post('/lightning/:location', [
     function(req,res,next) {
         var body = req.body;
         var location = req.params.location;
-        console.log(body);
+        // console.log(body);
 
         var currentRef = db.collection(location+"lightning");
 
@@ -90,7 +90,7 @@ weatherApp.post('/lightning/:location', [
                 if (!res.error) {
                     return res.sendStatus(200);
                 } else {
-                    return res.send(500);
+                    return res.sendStatus(500);
                 }
             });
 
@@ -106,7 +106,6 @@ weatherApp.post('/wait/times', [
 
 
         var body = req.body;
-        console.log('body');
 
         var currentRef = db.collection('waittimes');
 
@@ -115,7 +114,7 @@ weatherApp.post('/wait/times', [
                 if (!res.error) {
                     return res.sendStatus(200);
                 } else {
-                    return res.send(500);
+                    return res.sendStatus(500);
                 }
             });
 
@@ -143,8 +142,8 @@ weatherApp.get('/:location', function(req, res, next) {
                 return res.send(arrayToReturn);
             })
             .catch(err => {
-                return res.send(500);
                 console.log('Error getting documents', err);
+                return res.sendStatus(500);
             });
 
     }
@@ -161,8 +160,8 @@ weatherApp.get('/:location', function(req, res, next) {
             return res.send(arrayToReturn);
         })
         .catch(err => {
-            return res.send(500);
             console.log('Error getting documents', err);
+            return res.sendStatus(500);
         });
 
 

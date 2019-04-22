@@ -10,7 +10,6 @@ const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
 module.exports = {
 
   weatherAPIPromiseAll: function(locObj,weatherDataBody) {
-    console.log(locObj, weatherDataBody); 
 
       return Promise.all([
         ADDS('metars', {
@@ -39,7 +38,6 @@ module.exports = {
                 if (alerts.length > 0) {
                   
                   alerts.forEach(function(alert){
-                    //console.log(alert);
                     var alertObj = {
                       link: alert['@id'],
                       type: alert['@type'],
@@ -47,12 +45,9 @@ module.exports = {
                     };
                     alertArray.push(alertObj);
                   });
-
                 } else {
                   alertArray = [];
-                  // alertArray.push({id:'no active alerts'})
                 }
-
                 resolve(alertArray);
               } else {
                 reject(err);
@@ -65,45 +60,18 @@ module.exports = {
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
 
-      // body.AWOS = awosData;
-      // body.WarnWatchAdvise = alerts;
       var formattedData = this.createWeatherBody('jax',weatherDataBody);
 
       return formattedData;
     })
-    .catch((error) => {
-      // console.log(error);
+    .catch((err) => {
+      console.log('weather promise all error ->', err);
     });
-  },
-
-  // getAlerts: function(locationObj){
-  //   let alertHeaders = {
-  //     'User-Agent': 'NMRTC-Jax WEATHER APP',
-  //     'Content-Type' : 'application/ld+json',
-  //     'Accept' : 'application/ld+json'
-  //   };
-  //   let baseUrl = "https://api.weather.gov/alerts?active=true&zone=";
-
-  //   request({
-  //     headers: alertHeaders,
-  //     url: baseUrl+locationObj.alertZoneId,
-  //     method: "GET"
-  //   }, function(err, res, body) {
-  //       if (!err && res.statusCode === 200) {
-  //         var alerts = JSON.parse(body);
-  //         return alerts;
-  //       } else {
-  //         console.log(err)
-  //         return;
-  //       }
-  //   })
-
-  // }, 
+  }, 
 
   getAWOS: function(metars){
     
     var metarsArr = metars[0];
-      // console.log(metars[0]); //METAR for NAS JAX
       var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
       var a = 1.151; //knots to mph calculation magic number 1 knot = 1.151 MPH
       let wsm = a * wsk; //knots converted to MPH
@@ -117,11 +85,6 @@ module.exports = {
       } 
 
       var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
-      //console.log(wsm, slp, wdd, mps);
-      //wsm = Wind speed mph
-      //slp = Sea Level pressure
-      //wdd = Wind direction in degrees
-      //mps = Wind meters per second
       var tempC = parseInt(metarsArr.temp_c);
       var tempF = tempC * (9/5) + 32;
       
@@ -181,9 +144,6 @@ module.exports = {
   },
 
   createWeatherBody: function(location, data) {
-
-    console.log("data", data);
-
     var timestamp = moment();
 
     data.timestamp = timestamp.tz('America/New_York').format();
@@ -210,7 +170,6 @@ module.exports = {
         data.windsFromDirection = this.degToDirection(windsFromDegrees);
     }
 
-    console.log('createWeatherBody', data)
     return data;
 
   }
