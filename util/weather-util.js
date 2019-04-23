@@ -90,27 +90,15 @@ module.exports = {
       
 
       var awosData = {
-        wind_speed_kt: wsk,
-        wind_speed_mph: wsm,
-        wind_speed_mps: mps,
+        wind_speed_kt: this.roundNumber(wsk),
+        wind_speed_mph: this.roundNumber(wsm),
+        wind_speed_mps: this.roundNumber(mps),
         sea_level_pressure: slp,
         windDirection: wdd, 
-        temperature: tempF,
-        tempC: tempC
+        temperature: this.roundNumber(tempF),
+        tempC: this.roundNumber(tempC)
       };
       return awosData;
-  },
-
-  degToDirection: function(num) {
-        var val = Math.floor((num / 22.5) + 0.5);
-        var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-        return arr[(val % 16)];
-  },
-
-  convertTempToF: function(temp) {
-
-    return Math.round((temp *1.8) +32);
-
   },
 
   calculateFlagColor: function(wbgtf) {
@@ -158,11 +146,11 @@ module.exports = {
 
     data.wbgtData = this.calculateWBGT(data);
     data.flagColor = this.calculateFlagColor(data.wbgtData.wbgtF);
-    data.tempF = boxTempF;
-    data.tempC = boxTempC;
-    data.winds = Math.round(data['AWOS']['wind_speed_mph']);
-    data.pressure = data['AWOS']['sea_level_pressure'];
-    data.wbgt = data.wbgtData.wbgtF;
+    data.tempF = this.roundNumber(boxTempF);
+    data.tempC = this.roundNumber(boxTempC);
+    data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
+    data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
+    data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
@@ -172,7 +160,23 @@ module.exports = {
 
     return data;
 
+  },
+
+  degToDirection: function(num) {
+        var val = Math.floor((num / 22.5) + 0.5);
+        var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+        return arr[(val % 16)];
+  },
+
+  convertTempToF: function(temp) {
+    return Math.round((temp *1.8) +32);
+
+  },
+    
+  roundNumber: function(x) {
+    return Number.parseFloat(x).toFixed(2);
   }
+
 
 };
 
