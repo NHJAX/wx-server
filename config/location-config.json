@@ -2,7 +2,7 @@
 	"data":
 	[
 		{"location": "albany", "alertZoneId": "GAC095", "awosStationId": "KABY"},
-		{"location": "jax", "alertZoneId": "FLC089", "awosStationId": "KFHB"},
+		{"location": "jax", "alertZoneId": "FLC089", "awosStationId": "KNIP"},
 		{"location": "key_west", "alertZoneId": "FLC087", "awosStationId": "KEYW"},
 		{"location": "kings_bay", "alertZoneId": "GAC039", "awosStationId": "KFHB"},
 		{"location": "mayport", "alertZoneId": "FLC089", "awosStationId": "KFHB"}
