@@ -17,12 +17,12 @@ var SECURE_KEY = path.join(WORKING_DIR, 'certs' + '/wxKey.pem'); //Location of s
 var SECURE_CERT = path.join(WORKING_DIR, 'certs' + '/wxCert.pem'); //Location of Secure Cert - path to key only, DO NOT READ THE CERT
 
 var settings = { //Server settings
-    //port: 1883,
+    port: 1883,
     secure: {
         port: 8883, //Secure MQTT port
         keyPath: SECURE_KEY,
         certPath: SECURE_CERT,
-        allowNonSecure: false //Denies Nonsecure Connections 
+        allowNonSecure: false //Denies Nonsecure Connections
     }
     //
 };
