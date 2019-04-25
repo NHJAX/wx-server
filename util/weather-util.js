@@ -153,12 +153,15 @@ module.exports = {
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
+    data.humidity = data.humidity;
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
     if (windsFromDegrees) {
         data.windsFromDirection = this.degToDirection(windsFromDegrees);
     }
+
+    console.log(data);
 
     return data;
 
