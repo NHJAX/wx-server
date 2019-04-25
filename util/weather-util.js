@@ -174,7 +174,7 @@ module.exports = {
   },
     
   roundNumber: function(x) {
-    return Number.parseFloat(x).toFixed(2);
+    return Number.parseFloat(x).toFixed(0);
   }
 
 
