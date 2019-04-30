@@ -104,9 +104,11 @@ module.exports = {
   },
 
   createWeatherBody: function(data) {
-    data.timestamp = moment().format();
 
-    //data.timestamp = timestamp.tz('America/New_York').format();
+    data.isoDate = new Date.now();
+    var timestamp = moment();
+
+    data.timestamp = timestamp.tz('America/New_York').format();
 
     var awosTemp = data['AWOS']['temperature'];
     var boxTempC = data['temperature'];
