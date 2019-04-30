@@ -15,7 +15,7 @@ module.exports = {
 
       return Promise.all([
         ADDS('metars', {
-          stationString: locObj.awosStationId, //NAS JAX ICAO
+          stationString: locObj.awosStationId,
           hoursBeforeNow: 1
         }),
         new Promise((resolve, reject) => {
@@ -62,7 +62,7 @@ module.exports = {
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
 
-      var formattedData = this.createWeatherBody('jax',weatherDataBody);
+      var formattedData = this.createWeatherBody(weatherDataBody);
 
       return formattedData;
     })
@@ -73,7 +73,7 @@ module.exports = {
 
   getAWOS: function(metars){
     
-    var metarsArr = metars[0];
+      var metarsArr = metars[0];
       var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
       var a = 1.151; //knots to mph calculation magic number 1 knot = 1.151 MPH
       let wsm = a * wsk; //knots converted to MPH
@@ -101,6 +101,39 @@ module.exports = {
         tempC: this.roundNumber(tempC)
       };
       return awosData;
+  },
+
+  createWeatherBody: function(data) {
+    data.timestamp = moment();
+
+    //data.timestamp = timestamp.tz('America/New_York').format();
+
+    var awosTemp = data['AWOS']['temperature'];
+    var boxTempC = data['temperature'];
+    var boxTempF = data['temperature'] * 9 / 5 +32;
+    var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
+    data.tempComparison = tempComparison;
+    data.tempsMatch = (tempComparison <=10)?true:false;
+
+
+    data.wbgtData = this.calculateWBGT(data);
+    data.flagColor = this.calculateFlagColor(data.wbgtData.wbgtF);
+    data.tempF = this.roundNumber(boxTempF);
+    data.tempC = this.roundNumber(boxTempC);
+    data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
+    data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
+    data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
+
+    var windsFromDegrees = data['AWOS']['windDirection'];
+
+    if (windsFromDegrees) {
+        data.windsFromDirection = this.degToDirection(windsFromDegrees);
+    }
+
+    console.log(data);
+
+    return data;
+
   },
 
   calculateFlagColor: function(wbgtf) {
@@ -131,39 +164,6 @@ module.exports = {
         wbgtData.wbgtF  = this.convertTempToF(wbgtData.wbgtC);
 
         return wbgtData;
-  },
-
-  createWeatherBody: function(location, data) {
-    var timestamp = moment();
-
-    data.timestamp = timestamp.tz('America/New_York').format();
-
-    var awosTemp = data['AWOS']['temperature'];
-    var boxTempC = data['temperature'];
-    var boxTempF = data['temperature'] * 9 / 5 +32;
-    var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
-    data.tempComparison = tempComparison;
-    data.tempsMatch = (tempComparison <=10)?true:false;
-
-
-    data.wbgtData = this.calculateWBGT(data);
-    data.flagColor = this.calculateFlagColor(data.wbgtData.wbgtF);
-    data.tempF = this.roundNumber(boxTempF);
-    data.tempC = this.roundNumber(boxTempC);
-    data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
-    data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
-    data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
-
-    var windsFromDegrees = data['AWOS']['windDirection'];
-
-    if (windsFromDegrees) {
-        data.windsFromDirection = this.degToDirection(windsFromDegrees);
-    }
-
-    console.log(data);
-
-    return data;
-
   },
 
   degToDirection: function(num) {
