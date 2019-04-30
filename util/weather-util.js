@@ -105,7 +105,7 @@ module.exports = {
 
   createWeatherBody: function(data) {
 
-    data.isoDate = new Date.now();
+    data.isoDate = Date.now();
     var timestamp = moment();
 
     data.timestamp = timestamp.tz('America/New_York').format();
