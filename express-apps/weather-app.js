@@ -107,7 +107,7 @@ weatherApp.post('/wait/times', [
 
         var body = req.body;
 
-        var currentRef = db.collection('waittimes');
+        var currentRef = db.collection('pharmacyWaitTimes');
 
         currentRef.add(body)
             .then(ref => {
@@ -130,8 +130,11 @@ weatherApp.get('/:location', function(req, res, next) {
 
     var arrayToReturn = [];
 
-    if (location === 'pharmacyWaitTimes') {
+    //if (location === "pharmacyWaitTimes")
+
+    //if (location === 'pharmacyWaitTimes') {
         var currentRef = db.collection(location);
+        console.log(currentRef);
         var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
             .then(snapshot => {
                 snapshot.forEach(doc => {
@@ -146,23 +149,25 @@ weatherApp.get('/:location', function(req, res, next) {
                 return res.sendStatus(500);
             });
 
-    }
+    // } else {
+    //     var currentRef = db.collection(location + 'Weather');
+    //     var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
+    //         .then(snapshot => {
+    //             snapshot.forEach(doc => {
+    //                 var data = doc.data();
+    //                 data.timestamp = moment(data.timestamp).format('MMMM Do YYYY, HH:mm');
+    //                 arrayToReturn.push(data);
+    //             });
+    //             return res.send(arrayToReturn);
+    //         })
+    //         .catch(err => {
+    //             console.log('Error getting documents', err);
+    //             return res.sendStatus(500);
+    //         });
+    // }
 
 
-    var currentRef = db.collection(location + 'Weather');
-    var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
-        .then(snapshot => {
-            snapshot.forEach(doc => {
-                var data = doc.data();
-                data.timestamp = moment(data.timestamp).format('MMMM Do YYYY, HH:mm');
-                arrayToReturn.push(data);
-            });
-            return res.send(arrayToReturn);
-        })
-        .catch(err => {
-            console.log('Error getting documents', err);
-            return res.sendStatus(500);
-        });
+    
 
 
 });
