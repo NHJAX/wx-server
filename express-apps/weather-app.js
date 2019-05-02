@@ -130,30 +130,15 @@ weatherApp.get('/:location', function(req, res, next) {
 
     var arrayToReturn = [];
 
-    //if (location === "pharmacyWaitTimes")
-
-    var currentRef;
-
+    
     if (location === 'pharmacyWaitTimes') {
-        currentRef = db.collection(location);
-        console.log(currentRef);
+        currentRefRef = location;
+        console.log(currentRefRef);
     } else {
-        currentRef = db.collection(location + 'Weather');
-        // var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
-        //     .then(snapshot => {
-        //         snapshot.forEach(doc => {
-        //             var data = doc.data();
-        //             data.timestamp = moment(data.timestamp).format('MMMM Do YYYY, HH:mm');
-        //             arrayToReturn.push(data);
-        //         });
-        //         return res.send(arrayToReturn);
-        //     })
-        //     .catch(err => {
-        //         console.log('Error getting documents', err);
-        //         return res.sendStatus(500);
-        //     });
+        currentRefRef = location + 'Weather';
     }
 
+    var currentRef = db.collection(currentRefRef);
     var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
             .then(snapshot => {
                 snapshot.forEach(doc => {
