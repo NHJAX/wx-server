@@ -130,7 +130,7 @@ weatherApp.get('/:location', function(req, res, next) {
 
     var arrayToReturn = [];
 
-    
+    var currentRefRef;
     if (location === 'pharmacyWaitTimes') {
         currentRefRef = location;
         console.log(currentRefRef);
