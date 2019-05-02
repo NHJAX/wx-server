@@ -154,8 +154,8 @@ module.exports = {
 
     data.isoDate = Date.now();
 
-    var newYork = moment.tz(Date.now(), "America/New_York");
-    data.sqlDate = newYork.slice(0, 19).replace('T', ' ');
+    // var newYork = moment.tz(Date.now(), "America/New_York");
+    // data.sqlDate = newYork.slice(0, 19).replace('T', ' ');
 
     //data.sqlDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
@@ -164,6 +164,7 @@ module.exports = {
     var timestamp = moment();
 
     data.timestamp = timestamp.tz('America/New_York').format();
+    data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
 
     var awosTemp = data['AWOS']['temperature'];
     var boxTempC = data['temperature'];
