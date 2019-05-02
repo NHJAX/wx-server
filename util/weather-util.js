@@ -6,13 +6,13 @@ var moment = require('moment');
 var tz = require('moment-timezone');
 
 var previousAWOSData = {
-          wind_speed_kt: 10,
-          wind_speed_mph: 14,
-          wind_speed_mps: 22,
-          sea_level_pressure: 1000,
-          windDirection: 30, 
-          temperature: 79,
-          tempC: 29
+          // wind_speed_kt: 10,
+          // wind_speed_mph: 14,
+          // wind_speed_mps: 22,
+          // sea_level_pressure: 1000,
+          // windDirection: 30, 
+          // temperature: 79,
+          // tempC: 29
 };
 
 const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
@@ -97,22 +97,23 @@ module.exports = {
     
       
       if (metars === undefined || metars.length === 0) {
-        console.log("metars arr length === 0*******************************************");
-        console.log(metars);
-        console.log("metars arr length === 0*******************************************");
+        if (previousAWOSData.wind_speed_kt === undefined){
+
+            previousAWOSData = {
+                wind_speed_kt: 10,
+                wind_speed_mph: 14,
+                wind_speed_mps: 22,
+                sea_level_pressure: 1000,
+                windDirection: 30, 
+                temperature: 79
+              };
+        }
 
         awosData = previousAWOSData;
 
 
       } else {
         var metarsArr = metars[0];
-        console.log("metars arr length !== 0*******************************************");
-        console.log(metars);
-        console.log("metars arr length !== 0*******************************************");
-
-
-
-
 
         var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
         var a = 1.151; //knots to mph calculation magic number 1 knot = 1.151 MPH
