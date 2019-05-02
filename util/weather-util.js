@@ -5,6 +5,16 @@ const ADDS = require('adds');
 var moment = require('moment');
 var tz = require('moment-timezone');
 
+var previousAWOSData = {
+          wind_speed_kt: 10,
+          wind_speed_mph: 14,
+          wind_speed_mps: 22,
+          sea_level_pressure: 1000,
+          windDirection: 30, 
+          temperature: 79,
+          tempC: 29
+};
+
 const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
 
 module.exports = {
@@ -79,37 +89,62 @@ module.exports = {
 
   getAWOS: function(metars){
 
+
+      var awosData = {};
     console.log("getAWOS*******************************************");
       console.log(metars);
       console.log("getAWOS*******************************************");
     
       var metarsArr = metars[0];
-      var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
-      var a = 1.151; //knots to mph calculation magic number 1 knot = 1.151 MPH
-      let wsm = a * wsk; //knots converted to MPH
-      var b = 2.237; //MPH to MPS calculation magic number 2.237
-      let mps = wsm / b; //MPH converted to MPS
-      let slp = metarsArr.sea_level_pressure_mb
-      if (typeof slp === "number"){
-        slp = parseInt(slp); //Sea level pressure parsed into integer
+      if (metarsArr.length === 0) {
+        console.log("metars arr length === 0*******************************************");
+        console.log(metars);
+        console.log("metars arr length === 0*******************************************");
+
+        awosData = previousAWOSData;
+
+
       } else {
-        slp = 0;
-      } 
+        console.log("metars arr length !== 0*******************************************");
+        console.log(metars);
+        console.log("metars arr length !== 0*******************************************");
 
-      var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
-      var tempC = parseInt(metarsArr.temp_c);
-      var tempF = tempC * (9/5) + 32;
+
+
+
+
+        var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
+        var a = 1.151; //knots to mph calculation magic number 1 knot = 1.151 MPH
+        let wsm = a * wsk; //knots converted to MPH
+        var b = 2.237; //MPH to MPS calculation magic number 2.237
+        let mps = wsm / b; //MPH converted to MPS
+        let slp = metarsArr.sea_level_pressure_mb
+        if (typeof slp === "number"){
+          slp = parseInt(slp); //Sea level pressure parsed into integer
+        } else {
+          slp = 0;
+        } 
+
+        var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
+        var tempC = parseInt(metarsArr.temp_c);
+        var tempF = tempC * (9/5) + 32;
+        
+
+        awosData = {
+          wind_speed_kt: this.roundNumber(wsk),
+          wind_speed_mph: this.roundNumber(wsm),
+          wind_speed_mps: this.roundNumber(mps),
+          sea_level_pressure: slp,
+          windDirection: wdd, 
+          temperature: this.roundNumber(tempF),
+          tempC: this.roundNumber(tempC)
+        };
+
+        previousAWOSData = awosData;
+
+
+      }
       
-
-      var awosData = {
-        wind_speed_kt: this.roundNumber(wsk),
-        wind_speed_mph: this.roundNumber(wsm),
-        wind_speed_mps: this.roundNumber(mps),
-        sea_level_pressure: slp,
-        windDirection: wdd, 
-        temperature: this.roundNumber(tempF),
-        tempC: this.roundNumber(tempC)
-      };
       return awosData;
   },
 
