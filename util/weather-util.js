@@ -60,6 +60,9 @@ module.exports = {
     .then(([metars, alerts]) => {
 
       weatherDataBody.AWOS = this.getAWOS(metars);
+      console.log("*******************************************");
+      console.log(metars);
+      console.log("*******************************************");
       weatherDataBody.WarnWatchAdvise = alerts;
 
       var formattedData = this.createWeatherBody(weatherDataBody);
