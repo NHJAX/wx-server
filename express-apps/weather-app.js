@@ -132,10 +132,29 @@ weatherApp.get('/:location', function(req, res, next) {
 
     //if (location === "pharmacyWaitTimes")
 
-    //if (location === 'pharmacyWaitTimes') {
-        var currentRef = db.collection(location);
+    var currentRef;
+
+    if (location === 'pharmacyWaitTimes') {
+        currentRef = db.collection(location);
         console.log(currentRef);
-        var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
+    } else {
+        currentRef = db.collection(location + 'Weather');
+        // var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
+        //     .then(snapshot => {
+        //         snapshot.forEach(doc => {
+        //             var data = doc.data();
+        //             data.timestamp = moment(data.timestamp).format('MMMM Do YYYY, HH:mm');
+        //             arrayToReturn.push(data);
+        //         });
+        //         return res.send(arrayToReturn);
+        //     })
+        //     .catch(err => {
+        //         console.log('Error getting documents', err);
+        //         return res.sendStatus(500);
+        //     });
+    }
+
+    var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
             .then(snapshot => {
                 snapshot.forEach(doc => {
                     var data = doc.data();
@@ -148,23 +167,6 @@ weatherApp.get('/:location', function(req, res, next) {
                 console.log('Error getting documents', err);
                 return res.sendStatus(500);
             });
-
-    // } else {
-    //     var currentRef = db.collection(location + 'Weather');
-    //     var query = currentRef.orderBy('timestamp', 'desc').limit(1).get()
-    //         .then(snapshot => {
-    //             snapshot.forEach(doc => {
-    //                 var data = doc.data();
-    //                 data.timestamp = moment(data.timestamp).format('MMMM Do YYYY, HH:mm');
-    //                 arrayToReturn.push(data);
-    //             });
-    //             return res.send(arrayToReturn);
-    //         })
-    //         .catch(err => {
-    //             console.log('Error getting documents', err);
-    //             return res.sendStatus(500);
-    //         });
-    // }
 
 
     
