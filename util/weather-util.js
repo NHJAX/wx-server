@@ -153,7 +153,14 @@ module.exports = {
   createWeatherBody: function(data) {
 
     data.isoDate = Date.now();
-    data.sqlDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    var newYork = moment.tz(Date.now(), "America/New_York");
+    data.sqlDate = newYork.slice(0, 19).replace('T', ' ');
+
+    //data.sqlDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+
+
     var timestamp = moment();
 
     data.timestamp = timestamp.tz('America/New_York').format();
