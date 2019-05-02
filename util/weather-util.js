@@ -91,12 +91,12 @@ module.exports = {
 
 
       var awosData = {};
-    console.log("getAWOS*******************************************");
+      console.log("getAWOS*******************************************");
       console.log(metars);
       console.log("getAWOS*******************************************");
     
       var metarsArr = metars[0];
-      if (metarsArr.length === 0) {
+      if (metarsArr.length === 0 || metars === undefined) {
         console.log("metars arr length === 0*******************************************");
         console.log(metars);
         console.log("metars arr length === 0*******************************************");
