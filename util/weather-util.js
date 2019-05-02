@@ -12,6 +12,8 @@ module.exports = {
   weatherAPIPromiseAll: function(locObj,weatherDataBody) {
 
     console.log(weatherDataBody);
+    console.log("location object", locObj);
+    console.log(locObj.awosStationId);
 
       return Promise.all([
         ADDS('metars', {
