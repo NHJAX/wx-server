@@ -59,10 +59,11 @@ module.exports = {
       ])
     .then(([metars, alerts]) => {
 
-      weatherDataBody.AWOS = this.getAWOS(metars);
-      console.log("*******************************************");
+
+      console.log("then*******************************************");
       console.log(metars);
-      console.log("*******************************************");
+      console.log("then*******************************************");
+      weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
 
       var formattedData = this.createWeatherBody(weatherDataBody);
@@ -75,6 +76,10 @@ module.exports = {
   }, 
 
   getAWOS: function(metars){
+
+    console.log("getAWOS*******************************************");
+      console.log(metars);
+      console.log("getAWOS*******************************************");
     
       var metarsArr = metars[0];
       var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
