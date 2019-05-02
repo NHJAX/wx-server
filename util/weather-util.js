@@ -96,7 +96,7 @@ module.exports = {
       console.log("getAWOS*******************************************");
     
       var metarsArr = metars[0];
-      if (metarsArr.length === 0 || metars === undefined) {
+      if (metarsArr.length === 0 || metars === undefined || !metars) {
         console.log("metars arr length === 0*******************************************");
         console.log(metars);
         console.log("metars arr length === 0*******************************************");
