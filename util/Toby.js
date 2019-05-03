@@ -42,6 +42,17 @@ var fs = require('fs');
 //   }
 // })
 
+const WORKING_DIR = path.resolve('../secret-config');
+const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
+console.log(API_CONFIG);
+
+var twitter_application_consumer_key = API_CONFIG["consumer_key"];
+var twitter_application_secret = API_CONFIG["consumer_secret"];
+var twitter_user_access_token = API_CONFIG["access_token_key"];
+var twitter_user_secret = API_CONFIG["access_token_secret"];
+
+console.log(twitter_user_access_token);
+
 module.exports = {
   sendTweet: function(body){
     var status = 'Hello World';  // This is the tweet (ie status)
@@ -49,13 +60,7 @@ module.exports = {
     var postBody = {
     	'status': status
     };
-    const WORKING_DIR = path.resolve('../secret-config');
-    const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
 
-    var twitter_application_consumer_key = API_CONFIG["consumer_key"];
-    var twitter_application_secret = API_CONFIG["consumer_secret"];
-    var twitter_user_access_token = API_CONFIG["access_token_key"];
-    var twitter_user_secret = API_CONFIG["access_token_secret"];
 
     var OAuth = require('oauth');
 
