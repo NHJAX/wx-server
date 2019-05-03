@@ -14,11 +14,11 @@ const WORKING_DIR = path.resolve('../secret-config');
 const firebaseWeatherConfig = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'nmrtcjax-firebase-config.json')));
 var locationArray = require('../config/location-config').data;
 
-/* 
+/*
 Require util files
 */
 var weatherUtils = require('../util/weather-util');
-
+var tobytweeter = require('../util/Toby')
 var weatherApp = express();
 var dbInstance = firebaseWeather.initializeApp(firebaseWeatherConfig);
 var db = dbInstance.firestore();
@@ -82,6 +82,8 @@ weatherApp.post('/lightning/:location', [
         var body = req.body;
         var location = req.params.location;
         // console.log(body);
+
+        tobytweeter.sendTweet(body);
 
         var currentRef = db.collection(location+"lightning");
 
@@ -154,7 +156,7 @@ weatherApp.get('/:location', function(req, res, next) {
             });
 
 
-    
+
 
 
 });
