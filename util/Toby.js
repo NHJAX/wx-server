@@ -55,7 +55,7 @@ console.log(twitter_user_access_token);
 
 module.exports = {
   sendTweet: function(body){
-    var status = 'Hello World';  // This is the tweet (ie status)
+    var status = 'Lightning detected within ' + body.DistanceKM + ' @ ' + body.Time;  // This is the tweet (ie status)
 
     var postBody = {
     	'status': status
