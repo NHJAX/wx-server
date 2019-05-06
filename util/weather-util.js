@@ -64,7 +64,8 @@ module.exports = {
                     alertArray.push(alertObj);
                   });
                 } else {
-                  alertArray = ['No Watches, Warnings, or Advisories at this time.'];
+                //  alertArray = ['No Watches, Warnings, or Advisories at this time.'];
+                  alertArray = [];
                 }
                 resolve(alertArray);
               } else {
