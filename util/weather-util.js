@@ -14,7 +14,7 @@ var previousAWOSData = {
           // wind_speed_mph: 14,
           // wind_speed_mps: 22,
           // sea_level_pressure: 1000,
-          // windDirection: 30, 
+          // windDirection: 30,
           // temperature: 79,
           // tempC: 29
 };
@@ -40,7 +40,7 @@ module.exports = {
             'Content-Type' : 'application/ld+json',
             'Accept' : 'application/ld+json'
           };
-          
+
 
           request({
             headers: alertHeaders,
@@ -54,7 +54,7 @@ module.exports = {
                 alerts = alerts['@graph'];
 
                 if (alerts.length > 0) {
-                  
+
                   alerts.forEach(function(alert){
                     var alertObj = {
                       link: alert['@id'],
@@ -89,7 +89,7 @@ module.exports = {
     .catch((err) => {
       console.log('weather promise all error ->', err);
     });
-  }, 
+  },
 
   getAWOS: function(metars){
 
@@ -98,8 +98,8 @@ module.exports = {
       console.log("getAWOS*******************************************");
       console.log(metars);
       console.log("getAWOS*******************************************");
-    
-      
+
+
       if (metars === undefined || metars.length === 0) {
         if (previousAWOSData.wind_speed_kt === undefined){
 
@@ -108,7 +108,7 @@ module.exports = {
                 wind_speed_mph: 14,
                 wind_speed_mps: 22,
                 sea_level_pressure: 1000,
-                windDirection: 30, 
+                windDirection: 30,
                 temperature: 79
               };
         }
@@ -129,19 +129,19 @@ module.exports = {
           slp = parseInt(slp); //Sea level pressure parsed into integer
         } else {
           slp = 0;
-        } 
+        }
 
         var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
         var tempC = parseInt(metarsArr.temp_c);
         var tempF = tempC * (9/5) + 32;
-        
+
 
         awosData = {
           wind_speed_kt: this.roundNumber(wsk),
           wind_speed_mph: this.roundNumber(wsm),
           wind_speed_mps: this.roundNumber(mps),
           sea_level_pressure: slp,
-          windDirection: wdd, 
+          windDirection: wdd,
           temperature: this.roundNumber(tempF),
           tempC: this.roundNumber(tempC)
         };
@@ -150,7 +150,7 @@ module.exports = {
 
 
       }
-      
+
       return awosData;
   },
 
@@ -195,10 +195,9 @@ module.exports = {
     console.log(data);
 
 
-    if (data.flagColor !== previousFlagColor) (
+    if (data.flagColor !== previousFlagColor) {
       tobytweeter.sendTweet("Heatstress Flag Color Change: Previous - " +previousFlagColor+" Current - "+data.flagColor);
-
-      )
+    }
 
     previousFlagColor = data.flagColor;
 
@@ -247,11 +246,10 @@ module.exports = {
     return Math.round((temp *1.8) +32);
 
   },
-    
+
   roundNumber: function(x) {
     return Number.parseFloat(x).toFixed(0);
   }
 
 
 };
-
