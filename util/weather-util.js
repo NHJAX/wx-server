@@ -202,7 +202,7 @@ module.exports = {
 
 
     if (data.flagColor !== previousFlagColor) {
-      tobytweeter.sendTweet("Heatstress Flag Color Change: Previous - " + previousFlagColor + " Current - " + data.flagColor + " valid at " + data.sqlDate);
+      tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.wbgt + "F.");
     }
     previousFlagColor = data.flagColor;
 
