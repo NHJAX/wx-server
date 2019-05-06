@@ -82,6 +82,12 @@ module.exports = {
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
 
+      if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
+        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise + " valid at " + data.sqlDate);
+      }
+      
+      previousAlert = weatherDataBody.WarnWatchAdvise;
+
       var formattedData = this.createWeatherBody(weatherDataBody);
 
       return formattedData;
@@ -198,11 +204,7 @@ module.exports = {
     if (data.flagColor !== previousFlagColor) {
       tobytweeter.sendTweet("Heatstress Flag Color Change: Previous - " + previousFlagColor + " Current - " + data.flagColor + " valid at " + data.sqlDate);
     }
-    if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
-      tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise + " valid at " + data.sqlDate);
-    }
     previousFlagColor = data.flagColor;
-    previousAlert = weatherDataBody.WarnWatchAdvise;
 
     return data;
 
