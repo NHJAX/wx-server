@@ -64,7 +64,7 @@ module.exports = {
                     alertArray.push(alertObj);
                   });
                 } else {
-                  alertArray = [];
+                  alertArray = ['No Watches, Warnings, or Advisories at this time.'];
                 }
                 resolve(alertArray);
               } else {
@@ -81,9 +81,11 @@ module.exports = {
       console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
-
+      var timestamp = moment();
+      data.timestamp = timestamp.tz('America/New_York').format();
+      data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
       if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
-        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise);
+        tobytweeter.sendTweet("National Weather Service Alert - As of " + data.sqlDate + " " + weatherDataBody.WarnWatchAdvise);
       }
 
       previousAlert = weatherDataBody.WarnWatchAdvise;
