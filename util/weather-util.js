@@ -6,7 +6,7 @@ var moment = require('moment');
 var tz = require('moment-timezone');
 
 var tobytweeter = require('../util/Toby');
-
+var sqlDate = "";
 var previousFlagColor = "";
 var previousAlert = "";
 var previousAWOSData = {
