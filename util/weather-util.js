@@ -83,9 +83,9 @@ module.exports = {
       weatherDataBody.WarnWatchAdvise = alerts;
 
       if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
-        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise + " valid at " + data.sqlDate);
+        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise);
       }
-      
+
       previousAlert = weatherDataBody.WarnWatchAdvise;
 
       var formattedData = this.createWeatherBody(weatherDataBody);
