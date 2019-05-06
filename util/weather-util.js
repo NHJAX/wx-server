@@ -8,7 +8,7 @@ var tz = require('moment-timezone');
 var tobytweeter = require('../util/Toby');
 
 var previousFlagColor = "";
-
+var previousAlert = "";
 var previousAWOSData = {
           // wind_speed_kt: 10,
           // wind_speed_mph: 14,
@@ -196,11 +196,13 @@ module.exports = {
 
 
     if (data.flagColor !== previousFlagColor) {
-      tobytweeter.sendTweet("Heatstress Flag Color Change: Previous - " +previousFlagColor+" Current - "+data.flagColor);
+      tobytweeter.sendTweet("Heatstress Flag Color Change: Previous - " + previousFlagColor + " Current - " + data.flagColor + " valid at " + data.sqlDate);
     }
-
+    if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
+      tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise + " valid at " + data.sqlDate);
+    }
     previousFlagColor = data.flagColor;
-
+    previousAlert = weatherDataBody.WarnWatchAdvise;
 
     return data;
 
