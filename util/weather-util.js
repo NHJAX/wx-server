@@ -84,7 +84,7 @@ module.exports = {
       var timestamp = moment();
       sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
       if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
-        tobytweeter.sendTweet("National Weather Service Alert - As of " + sqlDate + " " + weatherDataBody.WarnWatchAdvise);
+        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise);
       }
 
       previousAlert = weatherDataBody.WarnWatchAdvise;
