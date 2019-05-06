@@ -5,6 +5,10 @@ const ADDS = require('adds');
 var moment = require('moment');
 var tz = require('moment-timezone');
 
+var tobytweeter = require('../util/Toby');
+
+var previousFlagColor = "";
+
 var previousAWOSData = {
           // wind_speed_kt: 10,
           // wind_speed_mph: 14,
@@ -189,6 +193,15 @@ module.exports = {
     }
 
     console.log(data);
+
+
+    if (data.flagColor !== previousFlagColor) (
+      tobytweeter.sendTweet("Heatstress Flag Color Change: Previous - " +previousFlagColor+" Current - "+data.flagColor);
+
+      )
+
+    previousFlagColor = data.flagColor;
+
 
     return data;
 

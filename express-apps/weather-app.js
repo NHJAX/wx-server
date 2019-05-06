@@ -18,7 +18,7 @@ var locationArray = require('../config/location-config').data;
 Require util files
 */
 var weatherUtils = require('../util/weather-util');
-var tobytweeter = require('../util/Toby')
+var tobytweeter = require('../util/Toby');
 var weatherApp = express();
 var dbInstance = firebaseWeather.initializeApp(firebaseWeatherConfig);
 var db = dbInstance.firestore();

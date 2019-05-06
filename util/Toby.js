@@ -54,8 +54,8 @@ var twitter_user_secret = API_CONFIG["access_token_secret"];
 console.log(twitter_user_access_token);
 
 module.exports = {
-  sendTweet: function(body){
-    var status = 'Lightning detected within ' + body.DistanceKM + 'KM @ ' + body.Time;  // This is the tweet (ie status)
+  sendTweet: function(status){
+    //var status = 'Lightning detected within ' + body.DistanceKM + 'KM @ ' + body.Time;  // This is the tweet (ie status)
 
     var postBody = {
     	'status': status
