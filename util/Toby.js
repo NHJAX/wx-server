@@ -48,27 +48,27 @@ module.exports = {
     			console.log(data);
     		}
     	});
-      FB.setAccessToken('access_token');
-
-      FB.api('', 'post', {
-          batch: [
-              { method: 'post', relative_url: 'me/feed', body:'message=' + encodeURIComponent(postBody) }
-          ]
-      }, function (res) {
-          var res0;
-
-          if(!res || res.error) {
-              console.log(!res ? 'error occurred' : res.error);
-              return;
-          }
-
-          res0 = JSON.parse(res[0].body);
-
-          if(res0.error) {
-              console.log(res0.error);
-          } else {
-              console.log('Post Id: ' + res0.id);
-          }
-      });
+      // FB.setAccessToken('access_token');
+      //
+      // FB.api('', 'post', {
+      //     batch: [
+      //         { method: 'post', relative_url: 'me/feed', body:'message=' + encodeURIComponent(postBody) }
+      //     ]
+      // }, function (res) {
+      //     var res0;
+      //
+      //     if(!res || res.error) {
+      //         console.log(!res ? 'error occurred' : res.error);
+      //         return;
+      //     }
+      //
+      //     res0 = JSON.parse(res[0].body);
+      //
+      //     if(res0.error) {
+      //         console.log(res0.error);
+      //     } else {
+      //         console.log('Post Id: ' + res0.id);
+      //     }
+      // });
   }
 }
