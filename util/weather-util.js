@@ -83,12 +83,21 @@ module.exports = {
       console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
-      TwitterWarning = weatherDataBody.WarnWatchAdvise;
+      TwitterWarning = alerts;
       var timestamp = moment();
       sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
-      String(TwitterWarning);
+      //String(TwitterWarning);
       if (weatherDataBody.WarnWatchAdvise !== previousAlert && weatherDataBody.WarnWatchAdvise.length >= 1) {
+        var i = 0;
+        for (i; i < alerts.length; i++) {
+          TwitterWarning += alerts[i].alert + " \n";
+        }
         tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning);
+      } else {
+        for (i; i < previousAlert.length; i++) {
+          TwitterWarning += previousAlert[i].alert + " \n";
+        }
+        tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning +" Has Cleared");
       }
 
       previousAlert = weatherDataBody.WarnWatchAdvise;
