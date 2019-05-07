@@ -55,6 +55,7 @@ module.exports = {
                 alerts = alerts['@graph'];
 
                 if (alerts.length > 0) {
+                  TwitterWarning = "National Weather Service Alert - ";
 
                   alerts.forEach(function(alert){
                     var alertObj = {
@@ -63,11 +64,22 @@ module.exports = {
                       alert: alert.headline
                     };
                     alertArray.push(alertObj);
+                    TwitterWarning += alert.headline + " \n";
                   });
+
                 } else {
-                //  alertArray = ['No Watches, Warnings, or Advisories at this time.'];
+                  TwitterWarning = "All NWS Warnings, Watches and Advisories have cleared.";
                   alertArray = [];
                 }
+
+                if (previousAlert === TwitterWarning) {
+
+                } else {
+                  tobytweeter.sendTweet(TwitterWarning);
+                }
+                previousAlert = TwitterWarning;
+
+
                 resolve(alertArray);
               } else {
                 reject(err);
@@ -87,7 +99,7 @@ module.exports = {
       var timestamp = moment();
       sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
       //String(TwitterWarning);
-      if (alerts !== previousAlert && alerts.length >= 1) {
+      /*if (alerts !== previousAlert && alerts.length >= 1) {
         var i = 0;
         console.log(alerts);
         for (i; i < alerts.length; i++) {
@@ -107,6 +119,7 @@ module.exports = {
       }
 
       previousAlert = alerts;
+      */
 
       var formattedData = this.createWeatherBody(weatherDataBody);
 
