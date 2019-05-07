@@ -180,7 +180,11 @@ module.exports = {
     var arr = [];
     arr.push(awosTempC);
     arr.push(boxTempC);
-    arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
+
+    var arrAvg = (arr) => {
+      return arr.reduce((a,b) => a + b, 0) / arr.length;
+    }
+    console.log(arrAvg);
 
     data.temperatureAvg = arrAvg;//((awosTempC + boxTempC)/2);
 
