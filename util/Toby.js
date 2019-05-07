@@ -19,35 +19,35 @@ module.exports = {
     //var status = 'Lightning detected within ' + body.DistanceKM + 'KM @ ' + body.Time;  // This is the tweet (ie status)
 
     var postBody = {
-    	'status': status
+        'status': status
     };
 
 
     var OAuth = require('oauth');
 
     var oauth = new OAuth.OAuth(
-    	'https://api.twitter.com/oauth/request_token',
-    	'https://api.twitter.com/oauth/access_token',
-    	twitter_application_consumer_key,
-    	twitter_application_secret,
-    	'1.0A',
-    	null,
-    	'HMAC-SHA1'
+        'https://api.twitter.com/oauth/request_token',
+        'https://api.twitter.com/oauth/access_token',
+        twitter_application_consumer_key,
+        twitter_application_secret,
+        '1.0A',
+        null,
+        'HMAC-SHA1'
     );
 
     console.log('Ready to Tweet article:\n\t', postBody.status);
     oauth.post('https://api.twitter.com/1.1/statuses/update.json',
-    	twitter_user_access_token,  // oauth_token (user access token)
+        twitter_user_access_token,  // oauth_token (user access token)
         twitter_user_secret,  // oauth_secret (user secret)
         postBody,  // post body
         '',  // post content type ?
-    	function(err, data, res) {
-    		if (err) {
-    			console.log(err);
-    		} else {
-    			console.log(data);
-    		}
-    	});
+        function(err, data, res) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(data);
+            }
+        });
       // FB.setAccessToken('access_token');
       //
       // FB.api('', 'post', {

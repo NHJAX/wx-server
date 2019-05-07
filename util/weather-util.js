@@ -9,6 +9,7 @@ var tobytweeter = require('../util/Toby');
 var sqlDate = "";
 var previousFlagColor = "";
 var previousAlert = "";
+var TwitterWarning ="";
 var previousAWOSData = {
           // wind_speed_kt: 10,
           // wind_speed_mph: 14,
@@ -54,6 +55,7 @@ module.exports = {
                 alerts = alerts['@graph'];
 
                 if (alerts.length > 0) {
+                  TwitterWarning = "National Weather Service Alert - ";
 
                   alerts.forEach(function(alert){
                     var alertObj = {
@@ -62,10 +64,22 @@ module.exports = {
                       alert: alert.headline
                     };
                     alertArray.push(alertObj);
+                    TwitterWarning += alert.headline + " \n";
                   });
+
                 } else {
-                  alertArray = ['No Watches, Warnings, or Advisories at this time.'];
+                  TwitterWarning = "All NWS Warnings, Watches and Advisories have cleared.";
+                  alertArray = [];
                 }
+
+                if (previousAlert === TwitterWarning) {
+
+                } else {
+                  tobytweeter.sendTweet(TwitterWarning);
+                }
+                previousAlert = TwitterWarning;
+
+
                 resolve(alertArray);
               } else {
                 reject(err);
@@ -81,13 +95,31 @@ module.exports = {
       console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
-      var timestamp = moment();
-      sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
-      if (weatherDataBody.WarnWatchAdvise !== previousAlert) {
-        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise);
+      //TwitterWarning = alerts;
+      //var timestamp = moment();
+      //sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
+      //String(TwitterWarning);
+      /*if (alerts !== previousAlert && alerts.length >= 1) {
+        var i = 0;
+        console.log(alerts);
+        for (i; i < alerts.length; i++) {
+          console.log(i,alerts[i]);
+          TwitterWarning += alerts[i].alert + " \n";
+          // TwitterWarning = alerts[i].alert + " \n";
+        }
+        console.log(TwitterWarning);
+        tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning);
+      } else {
+        for (i; i < previousAlert.length; i++) {
+          TwitterWarning += previousAlert[i].alert + " \n";
+          // TwitterWarning = previousAlert[i].alert + " \n";
+
+        }
+        tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning +" Has Cleared");
       }
 
-      previousAlert = weatherDataBody.WarnWatchAdvise;
+      previousAlert = alerts;
+      */
 
       var formattedData = this.createWeatherBody(weatherDataBody);
 
@@ -167,7 +199,7 @@ module.exports = {
     var timestamp = moment();
 
     data.timestamp = timestamp.tz('America/New_York').format();
-    data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
+    data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS");
 
     var awosTemp = data['AWOS']['temperature'];
     var awosTempC = data['AWOS']['tempC'];
@@ -251,7 +283,7 @@ module.exports = {
 
   roundNumber: function(x) {
     return Number.parseFloat(x).toFixed(0);
-  }
+  },
 
   calcuateAvg: function(a,b) {
     var avg;
