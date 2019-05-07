@@ -177,16 +177,8 @@ module.exports = {
     data.tempComparison = tempComparison;
     data.tempsMatch = (tempComparison <=10)?true:false;
 
-    var arr = [];
-    arr.push(awosTempC);
-    arr.push(boxTempC);
 
-    var arrAvg = (arr) => {
-      return arr.reduce((a,b) => a + b, 0) / arr.length;
-    }
-    console.log(arrAvg);
-
-    data.temperatureAvg = arrAvg;//((awosTempC + boxTempC)/2);
+    data.temperatureAvg = (awosTempC + boxTempC)/2;
 
 
     data.wbgtData = this.calculateWBGT(data);
