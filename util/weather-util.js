@@ -237,9 +237,9 @@ module.exports = {
         var WindsInMPS = data.AWOS.wind_speed_mps;
 
 
-        var relative = Math.exp(17.27*TempFromSensorCelsius/(237.7+TempFromSensorCelsius));
+        var relative = Math.exp(17.27*AvgTempCelsius/(237.7+AvgTempCelsius));
         var vapor = HumidityFromSensor/100*WindsInMPS*relative;
-        wbgtData.wbgtC = (0.567*TempFromSensorCelsius) + (0.393 * vapor) + 3.94;
+        wbgtData.wbgtC = (0.567*AvgTempCelsius) + (0.393 * vapor) + 3.94;
         wbgtData.wbgtF  = this.convertTempToF(wbgtData.wbgtC);
 
         return wbgtData;
