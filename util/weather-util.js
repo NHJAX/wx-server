@@ -210,6 +210,9 @@ module.exports = {
     }
     previousFlagColor = data.flagColor;
 
+
+    console.log(`WBGT ${data.wbgt} @ ${data.sqlDate}`);
+
     return data;
 
   },

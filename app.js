@@ -64,7 +64,7 @@ appLogger.info('Starting up...');
 app.use('/NHJax-api', [
 
     function init(req, res, next) {
-        console.log("init");
+        //console.log("init");
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Credentials', true);
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT', 'DELETE');
@@ -81,7 +81,7 @@ app.use('/NHJax-api', [
     },
 
     function validateApiKey(req, res, next) {
-        console.log('validate api key');
+        //console.log('validate api key');
 
         if (req.method === 'OPTIONS') {
             return next();
