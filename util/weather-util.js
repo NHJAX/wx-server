@@ -287,7 +287,7 @@ module.exports = {
 
   calcuateAvg: function(a,b) {
     var avg;
-    avg = (Number(a) + Number(b) / 2);
+    avg = (Number(a) + Number(b)) / 2;
     return avg;
   }
 
