@@ -9,6 +9,7 @@ var tobytweeter = require('../util/Toby');
 var sqlDate = "";
 var previousFlagColor = "";
 var previousAlert = "";
+var TwitterWarning ="";
 var previousAWOSData = {
           // wind_speed_kt: 10,
           // wind_speed_mph: 14,
