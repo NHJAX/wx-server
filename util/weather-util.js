@@ -82,10 +82,12 @@ module.exports = {
       console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
+      TwitterWarning = weatherDataBody.WarnWatchAdvise;
       var timestamp = moment();
       sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
+      String(TwitterWarning);
       if (weatherDataBody.WarnWatchAdvise !== previousAlert && weatherDataBody.WarnWatchAdvise.length >= 1) {
-        tobytweeter.sendTweet("National Weather Service Alert - " + weatherDataBody.WarnWatchAdvise);
+        tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning);
       }
 
       previousAlert = weatherDataBody.WarnWatchAdvise;
