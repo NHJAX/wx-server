@@ -177,8 +177,10 @@ module.exports = {
     data.tempComparison = tempComparison;
     data.tempsMatch = (tempComparison <=10)?true:false;
 
+    data.awosTempC = awosTempC;
 
-    data.temperatureAvg = (awosTempC + boxTempC)/2;
+
+    data.temperatureAvg = (Math.abs(awosTempC + boxTempC))/2;
 
 
     data.wbgtData = this.calculateWBGT(data);
