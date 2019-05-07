@@ -87,11 +87,14 @@ module.exports = {
       var timestamp = moment();
       sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
       //String(TwitterWarning);
-      if (weatherDataBody.WarnWatchAdvise !== previousAlert && weatherDataBody.WarnWatchAdvise.length >= 1) {
+      if (alerts !== previousAlert && alerts.length >= 1) {
         var i = 0;
+        console.log(alerts);
         for (i; i < alerts.length; i++) {
+          console.log(i,alerts[i]);
           TwitterWarning += alerts[i].alert + " \n";
         }
+        console.log(TwitterWarning);
         tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning);
       } else {
         for (i; i < previousAlert.length; i++) {
@@ -100,7 +103,7 @@ module.exports = {
         tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning +" Has Cleared");
       }
 
-      previousAlert = weatherDataBody.WarnWatchAdvise;
+      previousAlert = alerts;
 
       var formattedData = this.createWeatherBody(weatherDataBody);
 
