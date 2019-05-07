@@ -111,12 +111,12 @@ module.exports = {
         if (previousAWOSData.wind_speed_kt === undefined){
 
             previousAWOSData = {
-                wind_speed_kt: 10,
-                wind_speed_mph: 14,
-                wind_speed_mps: 22,
-                sea_level_pressure: 1000,
-                windDirection: 30,
-                temperature: 79
+                wind_speed_kt: 0,
+                wind_speed_mph: 0,
+                wind_speed_mps: 0,
+                sea_level_pressure: 0,
+                windDirection: 0,
+                temperature: 0
               };
         }
 
@@ -164,25 +164,19 @@ module.exports = {
   createWeatherBody: function(data) {
 
     data.isoDate = Date.now();
-
-    // var newYork = moment.tz(Date.now(), "America/New_York");
-    // data.sqlDate = newYork.slice(0, 19).replace('T', ' ');
-
-    //data.sqlDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-
-
     var timestamp = moment();
 
     data.timestamp = timestamp.tz('America/New_York').format();
     data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
 
     var awosTemp = data['AWOS']['temperature'];
+    var awosTempC = data['AWOS']['tempC'];
     var boxTempC = data['temperature'];
     var boxTempF = data['temperature'] * 9 / 5 +32;
     var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
     data.tempComparison = tempComparison;
     data.tempsMatch = (tempComparison <=10)?true:false;
+    data.temperatureAvg = ((awosTempC + boxTempC)/2);
 
 
     data.wbgtData = this.calculateWBGT(data);
@@ -228,14 +222,14 @@ module.exports = {
 
         var wbgtData = {};
 
-        var TempFromSensorCelsius = data.temperature;
+        var AvgTempCelsius = data.temperatureAvg;
         var HumidityFromSensor = data.humidity;
         var WindsInMPS = data.AWOS.wind_speed_mps;
 
 
-        var relative = Math.exp(17.27*TempFromSensorCelsius/(237.7+TempFromSensorCelsius));
+        var relative = Math.exp(17.27*AvgTempCelsius/(237.7+AvgTempCelsius));
         var vapor = HumidityFromSensor/100*WindsInMPS*relative;
-        wbgtData.wbgtC = (0.567*TempFromSensorCelsius) + (0.393 * vapor) + 3.94;
+        wbgtData.wbgtC = (0.567*AvgTempCelsius) + (0.393 * vapor) + 3.94;
         wbgtData.wbgtF  = this.convertTempToF(wbgtData.wbgtC);
 
         return wbgtData;
