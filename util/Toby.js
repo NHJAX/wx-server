@@ -3,7 +3,7 @@
 var Twitter = require('twitter');
 var path = require('path');
 var fs = require('fs');
-//var FB = require('fb');
+var FB = require('fb');
 
 const WORKING_DIR = path.resolve('../secret-config');
 const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
@@ -48,15 +48,15 @@ module.exports = {
     			console.log(data);
     		}
     	});
-      // FB.setAccessToken(Facebook_token);
-      //
-      // FB.api('me/feed', 'post', { message: status }, function (res) {
-      //   if(!res || res.error) {
-      //     console.log(!res ? 'error occurred' : res.error);
-      //     return;
-      //   }
-      //   console.log('FaceBook Post Successful Id: ' + res.id);
-      // });
+      FB.setAccessToken(Facebook_token);
+
+      FB.api('me/feed', 'post', { message: postBody }, function (res) {
+        if(!res || res.error) {
+          console.log(!res ? 'error occurred' : res.error);
+          return;
+        }
+        console.log('FaceBook Post Successful Id: ' + res.id);
+      });
 
   }
 }
