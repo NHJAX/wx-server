@@ -26,9 +26,9 @@ module.exports = {
 
   weatherAPIPromiseAll: function(locObj,weatherDataBody) {
 
-    console.log(weatherDataBody);
-    console.log("location object", locObj);
-    console.log(locObj.awosStationId);
+    // console.log(weatherDataBody);
+    // console.log("location object", locObj);
+    // console.log(locObj.awosStationId);
 
       return Promise.all([
         ADDS('metars', {
@@ -90,39 +90,13 @@ module.exports = {
     .then(([metars, alerts]) => {
 
 
-      console.log("then*******************************************");
-      console.log(metars);
-      console.log("then*******************************************");
+      // console.log("then*******************************************");
+      // console.log(metars);
+      // console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
-      //TwitterWarning = alerts;
-      //var timestamp = moment();
-      //sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
-      //String(TwitterWarning);
-      /*if (alerts !== previousAlert && alerts.length >= 1) {
-        var i = 0;
-        console.log(alerts);
-        for (i; i < alerts.length; i++) {
-          console.log(i,alerts[i]);
-          TwitterWarning += alerts[i].alert + " \n";
-          // TwitterWarning = alerts[i].alert + " \n";
-        }
-        console.log(TwitterWarning);
-        tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning);
-      } else {
-        for (i; i < previousAlert.length; i++) {
-          TwitterWarning += previousAlert[i].alert + " \n";
-          // TwitterWarning = previousAlert[i].alert + " \n";
-
-        }
-        tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning +" Has Cleared");
-      }
-
-      previousAlert = alerts;
-      */
 
       var formattedData = this.createWeatherBody(weatherDataBody);
-
       return formattedData;
     })
     .catch((err) => {
@@ -134,9 +108,9 @@ module.exports = {
 
 
       var awosData = {};
-      console.log("getAWOS*******************************************");
-      console.log(metars);
-      console.log("getAWOS*******************************************");
+      // console.log("getAWOS*******************************************");
+      // console.log(metars);
+      // console.log("getAWOS*******************************************");
 
 
       if (metars === undefined || metars.length === 0) {
@@ -211,7 +185,7 @@ module.exports = {
 
 
 
-    data.temperatureAvg = this.calcuateAvg(awosTempC, boxTempC);
+    data.temperatureAvg = boxTempC;//this.calcuateAvg(awosTempC, boxTempC);
 
 
     data.wbgtData = this.calculateWBGT(data);
@@ -228,7 +202,7 @@ module.exports = {
         data.windsFromDirection = this.degToDirection(windsFromDegrees);
     }
 
-    console.log(data);
+    //console.log(data);
 
 
     if (data.flagColor !== previousFlagColor) {
