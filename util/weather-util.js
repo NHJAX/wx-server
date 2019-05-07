@@ -92,15 +92,15 @@ module.exports = {
         console.log(alerts);
         for (i; i < alerts.length; i++) {
           console.log(i,alerts[i]);
-          // TwitterWarning += alerts[i].alert + " \n";
-          TwitterWarning = alerts[i].alert + " \n";
+          TwitterWarning += alerts[i].alert + " \n";
+          // TwitterWarning = alerts[i].alert + " \n";
         }
         console.log(TwitterWarning);
         tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning);
       } else {
         for (i; i < previousAlert.length; i++) {
-          // TwitterWarning += previousAlert[i].alert + " \n";
-          TwitterWarning = previousAlert[i].alert + " \n";
+          TwitterWarning += previousAlert[i].alert + " \n";
+          // TwitterWarning = previousAlert[i].alert + " \n";
 
         }
         tobytweeter.sendTweet("National Weather Service Alert - " + TwitterWarning +" Has Cleared");
