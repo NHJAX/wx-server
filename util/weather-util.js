@@ -83,7 +83,7 @@ module.exports = {
       console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
-      TwitterWarning = alerts;
+      //TwitterWarning = alerts;
       var timestamp = moment();
       sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS")
       //String(TwitterWarning);
