@@ -177,10 +177,9 @@ module.exports = {
     data.tempComparison = tempComparison;
     data.tempsMatch = (tempComparison <=10)?true:false;
 
-    data.awosTempC = awosTempC;
 
 
-    data.temperatureAvg = (Math.abs(awosTempC + boxTempC)/2);
+    data.temperatureAvg = this.calcuateAvg(awosTempC, boxTempC);
 
 
     data.wbgtData = this.calculateWBGT(data);
@@ -252,6 +251,12 @@ module.exports = {
 
   roundNumber: function(x) {
     return Number.parseFloat(x).toFixed(0);
+  }
+
+  calcuateAvg: function(a,b) {
+    var avg;
+    avg = (Number(a) + Number(b) / 2);
+    return avg;
   }
 
 
