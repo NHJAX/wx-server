@@ -181,13 +181,20 @@ function CreateChartData(data) {
  * Get ALL for specific location
  */
 weatherApp.get('/:location/getAll', function(req, res, next) {
-
-
     var location = req.params.location;
-
     var arrayToReturn = [];
+    
+    //Added for getting pharm wait times data
+    var currentRefRef;
+    if (location === 'pharmacyWaitTimes') {
+        currentRefRef = location;
+    } else {
+        currentRefRef = location + 'Weather';
+    }
+    var currentRef = db.collection(currentRefRef);
 
-    var currentRef = db.collection(location + 'Weather');
+
+   //var currentRef = db.collection(location + 'Weather');
     var query = currentRef.orderBy('timestamp', 'desc').limit(20).get()
         .then(snapshot => {
             arrayToReturn = CreateChartData(snapshot);
