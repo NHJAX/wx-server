@@ -212,9 +212,7 @@ function CreateChartData(type,data) {
 function convertToWaittime(string) {
     var time = string.match(/\d/g);
     time = time.join("");
-    //alert (numb);​
-
-    return time
+    return time;
 }
 
 /*
