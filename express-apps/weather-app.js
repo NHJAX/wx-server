@@ -210,7 +210,7 @@ function CreateChartData(type,data) {
 
         data.forEach(doc => {
             var item = doc.data();
-            pharmArr =  = item.pharmacyData
+            pharmArr = item.pharmacyData
             return pharmArr;
         })
         var pharmData = data.pharmacyData;
