@@ -162,30 +162,6 @@ weatherApp.get('/:location', function(req, res, next) {
 
 });
 
-
-// "pharmacyData": [
-//             {
-//                 "avgVisitTime": "Unable to Calculate",
-//                 "intakeWaitTime": 18,
-//                 "numIntakePatients": 0,
-//                 "numProcessingPatients": 0,
-//                 "processingWaitTime": 0,
-//                 "site": "NBHC Albany Pharmacy",
-//                 "timeStamp": "Closed"
-//             },
-//             {
-//                 "avgVisitTime": "5 mins",
-//                 "intakeWaitTime": 0,
-//                 "numIntakePatients": 0,
-//                 "numProcessingPatients": 0,
-//                 "processingWaitTime": 0,
-//                 "site": "NH Jacksonville Satellite Pharmacy",
-//                 "timeStamp": "Closed"
-//             },
-
-
-
-
 function CreateChartData(type,data) {
 
     var arrayToReturn = [];
@@ -212,11 +188,17 @@ function CreateChartData(type,data) {
             var timestamp = doc.data().timestamp;
             var obj = {};
 
-            obj.nhjax = _.findWhere(item, {'site': 'NH Jacksonville Pharmacy'}).avgVisitTime;
-            //obj.albany = _.findWhere(item, {'site': 'NBHC Albany Pharmacy'}).avgVisitTime;
-            obj.mayport = _.findWhere(item, {'site': 'NBHC Mayport Pharmacy'}).avgVisitTime;
-            obj.kings_bay = _.findWhere(item, {'site': 'NBHC Kings Bay Pharmacy'}).avgVisitTime;
-            obj.nhjax_sat = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).avgVisitTime;
+            var nhjax = _.findWhere(item, {'site': 'NH Jacksonville Pharmacy'}).avgVisitTime;
+            var mayport = _.findWhere(item, {'site': 'NBHC Mayport Pharmacy'}).avgVisitTime;
+            var kings_bay = _.findWhere(item, {'site': 'NBHC Kings Bay Pharmacy'}).avgVisitTime;
+            var nhjax_sat = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).avgVisitTime;
+           // var albany = _.findWhere(item, {'site': 'NBHC Albany Pharmacy'}).avgVisitTime;
+
+            obj.nhjax = convertToWaittime(nhjax)
+            //obj.albany = convertToWaittime(albany)
+            obj.mayport = convertToWaittime(mayport)
+            obj.kings_bay = convertToWaittime(kings_bay)
+            obj.nhjax_sat = convertToWaittime(nhjax_sat)
             
             obj['timestamp'] = moment(timestamp).format('M/D/YY, HH:mm');
             obj['y-axis'] = 120;
@@ -225,6 +207,14 @@ function CreateChartData(type,data) {
     }
 
     return arrayToReturn.reverse();
+}
+
+function convertToWaittime(string) {
+    var time = string.match(/\d/g);
+    time = time.join("");
+    //alert (numb);​
+
+    return time
 }
 
 /*
