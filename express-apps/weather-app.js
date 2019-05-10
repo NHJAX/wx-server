@@ -204,26 +204,11 @@ function CreateChartData(type,data) {
             arrayToReturn.push(obj);
         });
     } else if (type === "pharmacy")  {
-        console.log('inside else if')
 
         var pharmArr = [];
 
         data.forEach(doc => {
             var item = doc.data().pharmacyData;
-            //pharmArr = item.pharmacyData
-        //     return pharmArr;
-        // })
-        // //var pharmData = data.pharmacyData;
-        // //console.log(data)
-        // console.log(pharmArr)
-        // //console.log(data)
-
-        // pharmArr.forEach(doc => {
-        //     //console.log(doc)
-        //     var item = doc;
-        //     //var item = doc.data();
-        //     //console.log(item);
-
             var obj = {};
 
             obj.nhjax = _.findWhere(item, {'site': 'NH Jacksonville Pharmacy'}).avgVisitTime;
@@ -232,25 +217,11 @@ function CreateChartData(type,data) {
             obj.kings_bay = _.findWhere(item, {'site': 'NBHC Kings Bay Pharmacy'}).avgVisitTime;
             obj.nhjax_sat = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).avgVisitTime;
             
-
-            
-            obj['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
+            obj['timestamp'] = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).timestamp;
             obj['y-axis'] = 120;
-            console.log(obj)
             return arrayToReturn.push(obj);
         });
     }
-    //log(type)
-    //log(data)
-
-    // data.forEach(doc => {
-    //     var item = doc.data();
-
-    //     item['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
-    //     item['y-axis'] = 120;
-    //     arrayToReturn.push(item);
-    // });
-
 
     return arrayToReturn.reverse();
 }
