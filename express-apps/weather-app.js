@@ -12,6 +12,8 @@ var request = require('request');
 var firebaseWeather = require("firebase");
 const WORKING_DIR = path.resolve('../secret-config');
 
+const log = console.log;
+
 const firebaseWeatherConfig = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'nmrtcjax-firebase-config.json')));
 var locationArray = require('../config/location-config').data;
 
@@ -202,7 +204,10 @@ function CreateChartData(type,data) {
             arrayToReturn.push(obj);
         });
     } else if (type === "pharmacy" && data.allPharmaciesClosed === false)  {
+        console.log('inside else if')
         var pharmData = data.pharmacyData;
+        log(pharmacyData)
+
         pharmData.forEach(doc => {
             var item = doc.data();
             console.log(item);
@@ -222,6 +227,8 @@ function CreateChartData(type,data) {
             arrayToReturn.push(obj);
         });
     }
+    log(type)
+    log(data)
 
     // data.forEach(doc => {
     //     var item = doc.data();
