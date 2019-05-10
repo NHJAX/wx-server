@@ -203,7 +203,7 @@ function CreateChartData(type,data) {
             obj['y-axis'] = 120;
             arrayToReturn.push(obj);
         });
-    } else if (type === "pharmacy" && data.allPharmaciesClosed === false)  {
+    } else if (type === "pharmacy")  {
         console.log('inside else if')
         var pharmData = data.pharmacyData;
         log(pharmacyData)
@@ -227,8 +227,8 @@ function CreateChartData(type,data) {
             arrayToReturn.push(obj);
         });
     }
-    log(type)
-    log(data)
+    //log(type)
+    //log(data)
 
     // data.forEach(doc => {
     //     var item = doc.data();
