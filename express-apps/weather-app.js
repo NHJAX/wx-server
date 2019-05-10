@@ -201,7 +201,7 @@ function CreateChartData(type,data) {
             obj['winds'] = item.winds;
             obj['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
             obj['y-axis'] = 120;
-            arrayToReturn.push(item);
+            arrayToReturn.push(obj);
         });
     } else if (type === "pharmacy" && data.allPharmaciesClosed === false)  {
         var pharmData = data.pharmacyData;
