@@ -205,12 +205,21 @@ function CreateChartData(type,data) {
         var pharmData = data.pharmacyData;
         pharmData.forEach(doc => {
             var item = doc.data();
+            console.log(item);
+
             var obj = {};
 
+            obj.nhjax = _.findWhere(item, {'site': 'NH Jacksonville Pharmacy'}).avgVisitTime;
+            obj.albany = _.findWhere(item, {'site': 'NBHC Albany Pharmacy'}).avgVisitTime;
+            obj.mayport = _.findWhere(item, {'site': 'NBHC Mayport Pharmacy'}).avgVisitTime;
+            obj.kings_bay = _.findWhere(item, {'site': 'NBHC Kings Bay Pharmacy'}).avgVisitTime;
+            obj.nhjax_sat = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).avgVisitTime;
             
-            item['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
-            item['y-axis'] = 120;
-            arrayToReturn.push(item);
+
+            
+            obj['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
+            obj['y-axis'] = 120;
+            arrayToReturn.push(obj);
         });
     }
 
