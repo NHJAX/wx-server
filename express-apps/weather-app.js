@@ -163,25 +163,25 @@ weatherApp.get('/:location', function(req, res, next) {
 });
 
 
-"pharmacyData": [
-            {
-                "avgVisitTime": "Unable to Calculate",
-                "intakeWaitTime": 18,
-                "numIntakePatients": 0,
-                "numProcessingPatients": 0,
-                "processingWaitTime": 0,
-                "site": "NBHC Albany Pharmacy",
-                "timeStamp": "Closed"
-            },
-            {
-                "avgVisitTime": "5 mins",
-                "intakeWaitTime": 0,
-                "numIntakePatients": 0,
-                "numProcessingPatients": 0,
-                "processingWaitTime": 0,
-                "site": "NH Jacksonville Satellite Pharmacy",
-                "timeStamp": "Closed"
-            },
+// "pharmacyData": [
+//             {
+//                 "avgVisitTime": "Unable to Calculate",
+//                 "intakeWaitTime": 18,
+//                 "numIntakePatients": 0,
+//                 "numProcessingPatients": 0,
+//                 "processingWaitTime": 0,
+//                 "site": "NBHC Albany Pharmacy",
+//                 "timeStamp": "Closed"
+//             },
+//             {
+//                 "avgVisitTime": "5 mins",
+//                 "intakeWaitTime": 0,
+//                 "numIntakePatients": 0,
+//                 "numProcessingPatients": 0,
+//                 "processingWaitTime": 0,
+//                 "site": "NH Jacksonville Satellite Pharmacy",
+//                 "timeStamp": "Closed"
+//             },
 
 
 
