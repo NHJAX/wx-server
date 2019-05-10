@@ -209,6 +209,7 @@ function CreateChartData(type,data) {
 
         data.forEach(doc => {
             var item = doc.data().pharmacyData;
+            var timestamp = doc.data().timestamp;
             var obj = {};
 
             obj.nhjax = _.findWhere(item, {'site': 'NH Jacksonville Pharmacy'}).avgVisitTime;
@@ -217,7 +218,7 @@ function CreateChartData(type,data) {
             obj.kings_bay = _.findWhere(item, {'site': 'NBHC Kings Bay Pharmacy'}).avgVisitTime;
             obj.nhjax_sat = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).avgVisitTime;
             
-            obj['timestamp'] = doc.Data().timestamp
+            obj['timestamp'] = moment(timestamp).format('M/D/YY, HH:mm');
             obj['y-axis'] = 120;
             return arrayToReturn.push(obj);
         });
