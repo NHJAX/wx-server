@@ -206,8 +206,9 @@ function CreateChartData(type,data) {
     } else if (type === "pharmacy")  {
         console.log('inside else if')
         var pharmData = data.pharmacyData;
-        log(pharmacyData)
-        log(data)
+        console.log(data)
+        console.log(pharmData)
+        console.log(data)
 
         pharmData.forEach(doc => {
             var item = doc.data();
