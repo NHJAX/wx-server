@@ -24,12 +24,6 @@ var weatherApp = express();
 var dbInstance = firebaseWeather.initializeApp(firebaseWeatherConfig);
 var db = dbInstance.firestore();
 
-{
-    var foo = 'bar';
-    let foolet = 'barlet';
-}
-console.log(foo)
-console.log(foolet)
 /*
  *  CREATE
  */
