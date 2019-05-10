@@ -6,6 +6,7 @@ var path = require('path');
 var express = require('express');
 var appUtil = require('../util/app-util');
 var moment = require('moment');
+var tz = require('moment-timezone');
 var RequestError = require('../util/request-error');
 var request = require('request');
 var firebaseWeather = require("firebase");
@@ -168,7 +169,7 @@ function CreateChartData(data) {
     data.forEach(doc => {
         var item = doc.data();
 
-        item['timestamp'] = moment(item.timestamp).format('MM/DD/YY, HH:mm');
+        item['timestamp'] = moment(item.timestamp).tz('America/New_York').format('M/D/YY, H:m');
         item['y-axis'] = 120;
         arrayToReturn.push(item);
     });
