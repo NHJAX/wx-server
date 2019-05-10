@@ -209,20 +209,20 @@ function CreateChartData(type,data) {
         var pharmArr = [];
 
         data.forEach(doc => {
-            var item = doc.data();
-            pharmArr = item.pharmacyData
-            return pharmArr;
-        })
-        //var pharmData = data.pharmacyData;
-        //console.log(data)
-        //console.log(pharmArr)
-        //console.log(data)
+            var item = doc.data().pharmacyData;
+            //pharmArr = item.pharmacyData
+        //     return pharmArr;
+        // })
+        // //var pharmData = data.pharmacyData;
+        // //console.log(data)
+        // console.log(pharmArr)
+        // //console.log(data)
 
-        pharmArr.forEach(doc => {
-            console.log(doc)
-            var item = doc;
-            //var item = doc.data();
-            //console.log(item);
+        // pharmArr.forEach(doc => {
+        //     //console.log(doc)
+        //     var item = doc;
+        //     //var item = doc.data();
+        //     //console.log(item);
 
             var obj = {};
 
@@ -236,7 +236,8 @@ function CreateChartData(type,data) {
             
             obj['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
             obj['y-axis'] = 120;
-            arrayToReturn.push(obj);
+            console.log(obj)
+            return arrayToReturn.push(obj);
         });
     }
     //log(type)
@@ -281,7 +282,7 @@ weatherApp.get('/:location/getAll', function(req, res, next) {
             return res.send(arrayToReturn);
         })
         .catch(err => {
-            return res.send(500);
+            return res.sendStatus(500);
             console.log('Error getting documents', err);
         });
 
