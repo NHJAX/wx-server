@@ -205,12 +205,21 @@ function CreateChartData(type,data) {
         });
     } else if (type === "pharmacy")  {
         console.log('inside else if')
-        var pharmData = data.pharmacyData;
-        console.log(data)
-        console.log(pharmData)
-        console.log(data)
 
-        pharmData.forEach(doc => {
+        var pharmArr = [];
+
+        data.forEach(doc => {
+            var item = doc.data();
+            pharmArr =  = item.pharmacyData
+            return pharmArr;
+        })
+        var pharmData = data.pharmacyData;
+        //console.log(data)
+        console.log(pharmArr)
+        //console.log(data)
+
+        pharmArr.forEach(doc => {
+            console.log(doc)
             var item = doc.data();
             console.log(item);
 
