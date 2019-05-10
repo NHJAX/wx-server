@@ -213,15 +213,16 @@ function CreateChartData(type,data) {
             pharmArr = item.pharmacyData
             return pharmArr;
         })
-        var pharmData = data.pharmacyData;
+        //var pharmData = data.pharmacyData;
         //console.log(data)
-        console.log(pharmArr)
+        //console.log(pharmArr)
         //console.log(data)
 
         pharmArr.forEach(doc => {
             console.log(doc)
-            var item = doc.data();
-            console.log(item);
+            var item = doc;
+            //var item = doc.data();
+            //console.log(item);
 
             var obj = {};
 
