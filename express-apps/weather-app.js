@@ -169,7 +169,7 @@ function CreateChartData(data) {
     data.forEach(doc => {
         var item = doc.data();
 
-        item['timestamp'] = moment(item.timestamp).tz('America/New_York').format('M/D/YY, HH:mm');
+        item['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
         item['y-axis'] = 120;
         arrayToReturn.push(item);
     });
