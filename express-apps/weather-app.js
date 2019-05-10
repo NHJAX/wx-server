@@ -162,17 +162,67 @@ weatherApp.get('/:location', function(req, res, next) {
 
 });
 
-function CreateChartData(data) {
+
+"pharmacyData": [
+            {
+                "avgVisitTime": "Unable to Calculate",
+                "intakeWaitTime": 18,
+                "numIntakePatients": 0,
+                "numProcessingPatients": 0,
+                "processingWaitTime": 0,
+                "site": "NBHC Albany Pharmacy",
+                "timeStamp": "Closed"
+            },
+            {
+                "avgVisitTime": "5 mins",
+                "intakeWaitTime": 0,
+                "numIntakePatients": 0,
+                "numProcessingPatients": 0,
+                "processingWaitTime": 0,
+                "site": "NH Jacksonville Satellite Pharmacy",
+                "timeStamp": "Closed"
+            },
+
+
+
+
+function CreateChartData(type,data) {
 
     var arrayToReturn = [];
 
-    data.forEach(doc => {
-        var item = doc.data();
+    if (type === "weather"){
+        data.forEach(doc => {
+            var item = doc.data();
+            var obj = {};
 
-        item['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
-        item['y-axis'] = 120;
-        arrayToReturn.push(item);
-    });
+            obj['wbgt'] = item.wbgt;
+            obj['tempF'] = item.tempF;
+            obj['humidity'] = item.humidity;
+            obj['winds'] = item.winds;
+            obj['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
+            obj['y-axis'] = 120;
+            arrayToReturn.push(item);
+        });
+    } else if (type === "pharmacy" && data.allPharmaciesClosed === false)  {
+        var pharmData = data.pharmacyData;
+        pharmData.forEach(doc => {
+            var item = doc.data();
+            var obj = {};
+
+            
+            item['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
+            item['y-axis'] = 120;
+            arrayToReturn.push(item);
+        });
+    }
+
+    // data.forEach(doc => {
+    //     var item = doc.data();
+
+    //     item['timestamp'] = moment(item.timestamp).format('M/D/YY, HH:mm');
+    //     item['y-axis'] = 120;
+    //     arrayToReturn.push(item);
+    // });
 
 
     return arrayToReturn.reverse();
@@ -187,10 +237,13 @@ weatherApp.get('/:location/getAll', function(req, res, next) {
     
     //Added for getting pharm wait times data
     var currentRefRef;
+    var chartType = "";
     if (location === 'pharmacyWaitTimes') {
         currentRefRef = location;
+        chartType = "pharmacy";
     } else {
         currentRefRef = location + 'Weather';
+        chartType = "weather";
     }
     var currentRef = db.collection(currentRefRef);
 
@@ -198,7 +251,7 @@ weatherApp.get('/:location/getAll', function(req, res, next) {
    //var currentRef = db.collection(location + 'Weather');
     var query = currentRef.orderBy('timestamp', 'desc').limit(20).get()
         .then(snapshot => {
-            arrayToReturn = CreateChartData(snapshot);
+            arrayToReturn = CreateChartData(chartType, snapshot);
             return res.send(arrayToReturn);
         })
         .catch(err => {
