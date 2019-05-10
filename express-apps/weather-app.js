@@ -217,7 +217,7 @@ function CreateChartData(type,data) {
             obj.kings_bay = _.findWhere(item, {'site': 'NBHC Kings Bay Pharmacy'}).avgVisitTime;
             obj.nhjax_sat = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).avgVisitTime;
             
-            obj['timestamp'] = _.findWhere(item, {'site': 'NH Jacksonville Satellite Pharmacy'}).timestamp;
+            obj['timestamp'] = _.findWhere(item, {'site': 'NH Jacksonville Pharmacy'}).timeStamp;
             obj['y-axis'] = 120;
             return arrayToReturn.push(obj);
         });
