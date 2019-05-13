@@ -60,7 +60,8 @@ weatherApp.post('/:location', [
                     .then(ref => {
                         if (ref) {
                             // console.log('ref good');
-                            return res.sendStatus(200);
+                            next();
+                            //return res.sendStatus(200);
                         } else {
                             // console.log('ref error');
                             return res.sendStatus(500);
@@ -68,7 +69,8 @@ weatherApp.post('/:location', [
                     })
                     .catch((err) => {
                         console.log('currentRefPostData', err);
-                        return res.sendStatus(500);
+                        next();
+                        // return res.sendStatus(500);
                     });
             })
             .catch((err) => {
@@ -91,7 +93,8 @@ weatherApp.post('/lightning/:location', [
         currentRef.add(body)
             .then(ref => {
                 if (!res.error) {
-                    return res.sendStatus(200);
+                    next();
+                    //return res.sendStatus(200);
                 } else {
                     return res.sendStatus(500);
                 }
@@ -115,7 +118,8 @@ weatherApp.post('/wait/times', [
         currentRef.add(body)
             .then(ref => {
                 if (!res.error) {
-                    return res.sendStatus(200);
+                    next();
+                    //return res.sendStatus(200);
                 } else {
                     return res.sendStatus(500);
                 }
