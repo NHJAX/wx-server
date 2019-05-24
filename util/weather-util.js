@@ -256,7 +256,8 @@ module.exports = {
   },
 
   convertTempToF: function(temp) {
-    return  HI.toFahrenheit(temp);//Math.round((temp *1.8) +32);
+    return Math.round((temp *1.8) +32);
+
   },
 
   roundNumber: function(x) {
