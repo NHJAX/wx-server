@@ -4,6 +4,7 @@ var request = require('request');
 const ADDS = require('adds');
 var moment = require('moment');
 var tz = require('moment-timezone');
+var HI = require('heat-index');
 
 var tobytweeter = require('../util/Toby');
 var sqlDate = "";
@@ -195,6 +196,7 @@ module.exports = {
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
+    data.heatIndex = HI.heatIndex({temperature: boxTempF, humidity: data.humidity, fahrenheit: true});
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
@@ -254,8 +256,7 @@ module.exports = {
   },
 
   convertTempToF: function(temp) {
-    return Math.round((temp *1.8) +32);
-
+    return  HI.toFahrenheit(temp);//Math.round((temp *1.8) +32);
   },
 
   roundNumber: function(x) {
