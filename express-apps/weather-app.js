@@ -64,8 +64,7 @@ weatherApp.post('/:location', [
                             //return res.sendStatus(200);
                         } else {
                             // console.log('ref error');
-                            return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
-                            // return res.sendStatus(500);
+                            return res.sendStatus(500);
                         }
                     })
                     .catch((err) => {
@@ -76,7 +75,7 @@ weatherApp.post('/:location', [
             })
             .catch((err) => {
                 console.log('postDataCatch', err);
-                return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
+                return res.sendStatus(500);
             });
     }
 ]);
@@ -97,7 +96,7 @@ weatherApp.post('/lightning/:location', [
                     next();
                     //return res.sendStatus(200);
                 } else {
-                    return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
+                    return res.sendStatus(500);
                 }
             });
 
@@ -122,7 +121,7 @@ weatherApp.post('/wait/times', [
                     next();
                     //return res.sendStatus(200);
                 } else {
-                    return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
+                    return res.sendStatus(500);
                 }
             });
 
@@ -154,12 +153,11 @@ weatherApp.get('/:location', function(req, res, next) {
                     data.timestamp = moment(data.timestamp).format('MMMM Do YYYY, HH:mm');
                     arrayToReturn.push(data);
                 });
-                return next(arrayToReturn);
-                //return res.send(arrayToReturn);
+                return res.send(arrayToReturn);
             })
             .catch(err => {
                 console.log('Error getting documents', err);
-                return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
+                return res.sendStatus(500);
             });
 
 
@@ -254,7 +252,8 @@ weatherApp.get('/:location/getAll', function(req, res, next) {
             return res.send(arrayToReturn);
         })
         .catch(err => {
-            return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
+            return res.sendStatus(500);
+            console.log('Error getting documents', err);
         });
 
 
@@ -278,9 +277,8 @@ weatherApp.get('/:location/getLast/:count', function(req, res, next) {
             return res.send(arrayToReturn);
         })
         .catch(err => {
+            return res.send(500);
             console.log('Error getting documents', err);
-            return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
-
         });
 
 
@@ -331,9 +329,8 @@ weatherApp.get('/:location/getRangeFromNow', function(req, res, next) {
             return res.send(arrayToReturn);
         })
         .catch(err => {
+            return res.send(500);
             console.log('Error getting documents', err);
-            return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
-
         });
 
 
@@ -362,9 +359,8 @@ weatherApp.delete('/:location', function(req, res, next) {
             return res.send(200);
         })
         .catch(err => {
+            return res.send(500);
             console.log('Error getting documents', err);
-            return next(new RequestError('Internal Server Error. If this continues, please contact MID'));
-
         });
 
 
