@@ -181,6 +181,7 @@ module.exports = {
     var boxTempC = data['temperature'];
     var boxTempF = data['temperature'] * 9 / 5 +32;
     var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
+    var heatIndex = HI.heatIndex({temperature: boxTempF, humidity: data.humidity, fahrenheit: true});
     data.tempComparison = tempComparison;
     data.tempsMatch = (tempComparison <=10)?true:false;
 
@@ -190,13 +191,13 @@ module.exports = {
 
 
     data.wbgtData = this.calculateWBGT(data);
-    data.flagColor = this.calculateFlagColor(data.wbgtData.wbgtF);
+    data.flagColor = this.calculateFlagColor(heatIndex);//this.calculateFlagColor(data.wbgtData.wbgtF);
     data.tempF = this.roundNumber(boxTempF);
     data.tempC = this.roundNumber(boxTempC);
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
-    data.heatIndex = HI.heatIndex({temperature: boxTempF, humidity: data.humidity, fahrenheit: true});
+    data.heatIndex = heatIndex.toFixed(2);
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
