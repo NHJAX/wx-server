@@ -5,6 +5,7 @@ const ADDS = require('adds');
 var moment = require('moment');
 var tz = require('moment-timezone');
 var HI = require('heat-index');
+var Feels = require('feels');
 
 var tobytweeter = require('../util/Toby');
 var sqlDate = "";
@@ -198,6 +199,21 @@ module.exports = {
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
     data.heatIndex = heatIndex.toFixed(2);
+
+    const config = {
+      temp: data.tempF,
+      humidity: data.humidity,
+      speed: data.awosData.wind_speed_mps,
+      units: {
+        temp: 'f',
+        speed: 'mps'
+      }
+    };
+     
+    
+    data.feelsLike = new Feels(config).like();
+    var awbgt = Feels.AWBGT(data.tempC, data.humidity);
+    data.awbgt = convertTempToF(awbgt);
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
