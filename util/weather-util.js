@@ -200,22 +200,6 @@ module.exports = {
     data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
     data.heatIndex = heatIndex.toFixed(2);
 
-    const config = {
-      temp: 97,
-      humidity: 50,
-      speed: 3,
-      units: {
-        temp: 'f',
-        speed: 'mps'
-      }
-    };
-     
-    
-    var feelsLike = new Feels(config).like();
-    data.feelsLike = feelsLike;
-    var awbgt = Feels.AWBGT(36, 50);
-    data.awbgt = convertTempToF(awbgt);
-
     var windsFromDegrees = data['AWOS']['windDirection'];
 
     if (windsFromDegrees) {
@@ -267,6 +251,27 @@ module.exports = {
         return wbgtData;
   },
 
+  calculateFeelsMethods: function(data) {
+    const config = {
+      temp: data.tempF,
+      humidity: data.humidity,
+      speed: data['AWOS']['wind_speed_mps'],
+      units: {
+        temp: 'f',
+        speed: 'mps'
+      }
+    };
+     
+    
+    var feelsLike = new Feels(config).toF().like();
+    var awbgt = Feels.AWBGT(data.tempC, data.humidity);
+
+    feelsObj.heatIndex = feelsLike.toFixed(2);
+    feelsObj.awbgt = convertTempToF(awbgt);
+
+    return feelsObj;
+  },
+
   degToDirection: function(num) {
         var val = Math.floor((num / 22.5) + 0.5);
         var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
@@ -274,7 +279,8 @@ module.exports = {
   },
 
   convertTempToF: function(temp) {
-    return Math.round((temp *1.8) +32);
+    var ct = Feels.tempConvert(temp, 'c', 'f');
+    return ct.toFixed(2); //Math.round((temp *1.8) +32);
 
   },
 
