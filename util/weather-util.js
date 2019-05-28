@@ -28,10 +28,6 @@ module.exports = {
 
   weatherAPIPromiseAll: function(locObj,weatherDataBody) {
 
-    // console.log(weatherDataBody);
-    // console.log("location object", locObj);
-    // console.log(locObj.awosStationId);
-
       return Promise.all([
         ADDS('metars', {
           stationString: locObj.awosStationId,
@@ -272,7 +268,7 @@ module.exports = {
     var awbgt = Feels.AWBGT(data.temperature, data.humidity);
 
     feelsObj.heatIndex = feelsLike.toFixed(2);
-    feelsObj.awbgt = Feels.tempConvert(awbgt, 'c', 'f').toFixed(2);//convertTempToF(awbgt);
+    feelsObj.awbgt = this.convertTempToF(awbgt);//Feels.tempConvert(awbgt, 'c', 'f').toFixed(2);//convertTempToF(awbgt);
 
     return feelsObj;
   },
