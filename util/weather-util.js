@@ -3,12 +3,12 @@
 var request = require('request');
 const ADDS = require('adds');
 var moment = require('moment');
-var tz = require('moment-timezone');
+// var tz = require('moment-timezone');
 var HI = require('heat-index');
 var Feels = require('feels');
 
 var tobytweeter = require('../util/Toby');
-var sqlDate = "";
+// var sqlDate = "";
 var previousFlagColor = "";
 var previousAlert = "";
 var TwitterWarning ="";
@@ -253,6 +253,8 @@ module.exports = {
   },
 
   calculateFeelsMethods: function(data) {
+
+    console.log(data);
     const config = {
       temp: data.tempF,
       humidity: data.humidity,
