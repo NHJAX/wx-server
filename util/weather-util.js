@@ -203,7 +203,7 @@ module.exports = {
     const config = {
       temp: data.tempF,
       humidity: data.humidity,
-      speed: data.awosData.wind_speed_mps,
+      speed: data.AWOS.wind_speed_mps,
       units: {
         temp: 'f',
         speed: 'mps'
