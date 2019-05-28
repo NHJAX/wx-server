@@ -267,7 +267,7 @@ module.exports = {
 
     //console.log(config);
      
-    
+    var feelsObj = {};
     var feelsLike = new Feels(config).toF().like();
     var awbgt = Feels.AWBGT(data.temperature, data.humidity);
 
