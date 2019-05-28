@@ -199,6 +199,7 @@ module.exports = {
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
     data.heatIndex = heatIndex.toFixed(2);
+    data.feels = calculateFeelsMethods(data);
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
