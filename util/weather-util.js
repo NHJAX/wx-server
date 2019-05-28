@@ -272,7 +272,7 @@ module.exports = {
     var awbgt = Feels.AWBGT(data.temperature, data.humidity);
 
     feelsObj.heatIndex = feelsLike.toFixed(2);
-    feelsObj.awbgt = convertTempToF(awbgt);
+    feelsObj.awbgt = Feels.tempConvert(awbgt, 'c', 'f').toFixed(2);//convertTempToF(awbgt);
 
     return feelsObj;
   },
