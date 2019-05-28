@@ -254,20 +254,22 @@ module.exports = {
 
   calculateFeelsMethods: function(data) {
 
-    console.log(data);
+    //console.log(data);
     const config = {
-      temp: data.tempF,
+      temp: data.temperature,
       humidity: data.humidity,
-      speed: data['AWOS']['wind_speed_mps'],
+      speed: parseInt(data['AWOS']['wind_speed_mps']),
       units: {
-        temp: 'f',
+        temp: 'c',
         speed: 'mps'
       }
     };
+
+    //console.log(config);
      
     
     var feelsLike = new Feels(config).toF().like();
-    var awbgt = Feels.AWBGT(data.tempC, data.humidity);
+    var awbgt = Feels.AWBGT(data.temperature, data.humidity);
 
     feelsObj.heatIndex = feelsLike.toFixed(2);
     feelsObj.awbgt = convertTempToF(awbgt);
@@ -296,6 +298,5 @@ module.exports = {
     avg = (Number(a) + Number(b)) / 2;
     return avg;
   }
-
 
 };
