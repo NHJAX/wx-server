@@ -201,9 +201,9 @@ module.exports = {
     data.heatIndex = heatIndex.toFixed(2);
 
     const config = {
-      temp: data.tempF,
-      humidity: data.humidity,
-      speed: data.AWOS.wind_speed_mps,
+      temp: 97,
+      humidity: 50,
+      speed: 3,
       units: {
         temp: 'f',
         speed: 'mps'
@@ -211,8 +211,9 @@ module.exports = {
     };
      
     
-    data.feelsLike = new Feels(config).like();
-    var awbgt = Feels.AWBGT(data.tempC, data.humidity);
+    var feelsLike = new Feels(config).like();
+    data.feelsLike = feelsLike;
+    var awbgt = Feels.AWBGT(36, 50);
     data.awbgt = convertTempToF(awbgt);
 
     var windsFromDegrees = data['AWOS']['windDirection'];
