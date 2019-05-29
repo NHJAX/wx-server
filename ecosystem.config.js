@@ -31,7 +31,7 @@ module.exports = {
   },
   {
     name: 'LightningApp',
-    script: 'node /home/pi/apps/wx-server/lightningapp/Lightning.js',
+    script: 'node /lightningapp/Lightning.js',
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     instances: 1,
     autorestart: true,
