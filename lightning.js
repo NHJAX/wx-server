@@ -20,13 +20,24 @@ function Lightning(){
   var kingsbayStrikeCount = 0
   var allStationStrikeData = []
   var singleStrikeEvent = {};
-  var strikeArrToPush = [];
-  var strikeEventObject = [];
+  var strikeEventObj = {};
+  var strikeEventArr = [];
   var err
   var response
   var body
   var resolve
   var reject
+  var CronTimer
+  var jacksonvilleDistance = 0
+  var mayportDistance = 0
+  var keywestDistance = 0
+  var albanyDistance = 0
+  var kingsbayDistance = 0
+  var stormCenterjacksonville = 0
+  var stormCentermayport = 0
+  var stormCenteralbany = 0
+  var stormCenterkeywest = 0
+  var stormCenterkingsbay = 0
 //define hospitals
 
 var locations = [
@@ -115,6 +126,7 @@ initialize().then(function(data) {
             };
 //This object will be included in future upgrades which includes location of station direction and distance of strike
          var objToPush = {};
+         jacksonvilleDistance = jacksonvilleDistance + distance;
          objToPush.location = loc;
          objToPush.direction = direction;
          objToPush.distance = distance;
@@ -144,6 +156,7 @@ initialize().then(function(data) {
 
            };
            var objToPush = {};
+           mayportDistance = mayportDistance + distance;
            objToPush.location = loc;
            objToPush.direction = direction;
            objToPush.distance = distance;
@@ -174,6 +187,7 @@ initialize().then(function(data) {
 
              };
              var objToPush = {};
+             keywestDistance = keywestDistance + distance;
              objToPush.location = loc;
              objToPush.direction = direction;
              objToPush.distance = distance;
@@ -204,6 +218,7 @@ initialize().then(function(data) {
 
                };
                var objToPush = {};
+               albanyDistance = albanyDistance + distance;
                objToPush.location = loc;
                objToPush.direction = direction;
                objToPush.distance = distance;
@@ -233,6 +248,7 @@ initialize().then(function(data) {
                    kingsbayStrikeCount = kingsbayStrikeCount + 1;
                  };
                  var objToPush = {};
+                 kingsbayDistance = kingsbayDistance + distance;
                  objToPush.location = loc;
                  objToPush.direction = direction;
                  objToPush.distance = distance;
@@ -241,74 +257,86 @@ initialize().then(function(data) {
                }
             );
   sd = jacksonvilleStrikeCount + mayportStrikeCount + keywestStrikeCount + albanyStrikeCount + kingsbayStrikeCount;
+  stormCenterjacksonville = jacksonvilleDistance / jacksonvilleStrikeCount
+  stormCentermayport = mayportDistance / mayportStrikeCount
+  stormCenterkeywest = keywestDistance / keywestStrikeCount
+  stormCenteralbany = albanyDistance / albanyStrikeCount
+  stormCenterkingsbay = kingsbayDistance / kingsbayStrikeCount
+
   if(jacksonvilleStrikeCount > 0){
-    var strikeArrToPush = {
+    strikeEventObj = {
       "LightningDetected": "Yes",
       "Location": "Jax",
-      "Type": "Lightning"
+      "Type": "Lightning",
+      "strikesDetected": jacksonvilleStrikeCount,
+      "StormCenter": stormCenterjacksonville
+
     }
-    strikeEventObject.push(strikeArrToPush)
+    strikeEventArr.push(strikeEventObj)
   }
   if(mayportStrikeCount > 0){
-    var strikeArrToPush = {
+    strikeEventObj = {
       "LightningDetected": "Yes",
       "Location": "Mayport",
-      "Type": "Lightning"
+      "Type": "Lightning",
+      "strikesDetected": mayportStrikeCount,
+      "StormCenter": stormCentermayport
     }
-    strikeEventObject.push(strikeArrToPush)
+    strikeEventArr.push(strikeEventObj)
   }
   if(keywestStrikeCount > 0){
-    var strikeArrToPush = {
+    strikeEventObj = {
       "LightningDetected": "Yes",
       "Location": "Keywest",
-      "Type": "Lightning"
+      "Type": "Lightning",
+      "strikesDetected": keywestStrikeCount,
+      "StormCenter": stormCenterkeywest
+
     }
-    strikeEventObject.push(strikeArrToPush)
+    strikeEventArr.push(strikeEventObj)
   }
   if(albanyStrikeCount > 0){
-    var strikeArrToPush = {
+    strikeEventObj = {
       "LightningDetected": "Yes",
       "Location": "Albany",
-      "Type": "Lightning"
+      "Type": "Lightning",
+      "strikesDetected": albanyStrikeCount,
+      "StormCenter": stormCenteralbany
     }
-    strikeEventObject.push(strikeArrToPush)
+    strikeEventArr.push(strikeEventObj)
   }
   if(kingsbayStrikeCount > 0){
-    var strikeArrToPush = {
+    strikeEventObj = {
       "LightningDetected": "Yes",
       "Location": "Kingsbay",
-      "Type": "Lightning"
+      "Type": "Lightning",
+      "strikesDetected": kingsbayStrikeCount,
+      "StormCenter": stormCenterkingsbay
     }
-    strikeEventObject.push(strikeArrToPush)
+    strikeEventArr.push(strikeEventObj)
   }
   if(sd === 0) {
-    var strikeArrToPush = {
+    strikeEventObj = {
     "LightningDetected": "No",
     "Location": "None",
-    "Type": "Lightning"
+    "Type": "Lightning",
+    "strikesDetected": "0",
+    "StormCenter": "0"
   }
-  strikeEventObject.push(strikeArrToPush)
+  strikeEventArr.push(strikeEventObj)
 }
-    log(sd, "strikes detected");
-    log(strikeEventObject);
-//     log(sd, "strikes detected");
-//     log(jacksonvilleStrikeCount, "strikes detected near Jacksonville");
-//     log(mayportStrikeCount, "strikes detected near Mayport");
-//     log(keywestStrikeCount, "strikes detected near Keywest");
-//     log(albanyStrikeCount, "strikes detected near Albany");
-//     log(kingsbayStrikeCount, "strikes detected near Kingsbay");
-//     var strikeArrToPush = {
-//         "strikesDetected": sd,
-//         "Jacksonville": jacksonvilleStrikeCount,
-//         "Mayport": mayportStrikeCount,
-//         "Keywest": keywestStrikeCount,
-//         "Albany": albanyStrikeCount,
-//         "Kingsbay": kingsbayStrikeCount,
-// };
-//     log(strikeArrToPush);
-  //   log(allStationStrikeData);
-  // }
-//
+log('strikeEventArr',strikeEventArr);
+    // log(sd, "strikes detected");
+    // log(strikeEventObject);
+    // log(sd, "strikes detected");
+    // log(jacksonvilleStrikeCount, "strikes detected near Jacksonville");
+    // log(mayportStrikeCount, "strikes detected near Mayport");
+    // log(keywestStrikeCount, "strikes detected near Keywest");
+    // log(albanyStrikeCount, "strikes detected near Albany");
+    // log(kingsbayStrikeCount, "strikes detected near Kingsbay");
+    // log(allStationStrikeData);
+
 });
 };
 new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
+// Lightning()
