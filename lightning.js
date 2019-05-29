@@ -9,6 +9,8 @@ var CronJob = require('cron').CronJob;
 //Size of station range ring in meters
 var RangeRing = 32187;
 
+console.log(geolib);
+
 function Lightning(){
   var singleStrikeEvent
   var jacksonvilleStrikeCount = 0
@@ -85,7 +87,7 @@ initialize().then(function(data) {
 //Parsing through each item to determine if strike was at any assigned station
   arr.forEach((item) => {
 //Strike is plotted with a range ring around the station
-      singleStrikeEvent = geolib.isPointInCircle(
+      singleStrikeEvent = geolib.isPointWithinRadius(
 //location of strike
           {latitude: item.lat, longitude: item.long},
 //location of station
@@ -122,7 +124,7 @@ initialize().then(function(data) {
 //All calculations are the same as above
     //Mayport
     arr.forEach((item) => {
-        singleStrikeEvent = geolib.isPointInCircle(
+        singleStrikeEvent = geolib.isPointWithinRadius(
             {latitude: item.lat, longitude: item.long},
             {latitude: locations[1].latitude, longitude: locations[1].longitude},
             RangeRing
@@ -152,7 +154,7 @@ initialize().then(function(data) {
 
       //Keywest
       arr.forEach((item) => {
-          singleStrikeEvent = geolib.isPointInCircle(
+          singleStrikeEvent = geolib.isPointWithinRadius(
               {latitude: item.lat, longitude: item.long},
               {latitude: locations[2].latitude, longitude: locations[2].longitude},
               RangeRing
@@ -182,7 +184,7 @@ initialize().then(function(data) {
 
         //Albany
         arr.forEach((item) => {
-            singleStrikeEvent = geolib.isPointInCircle(
+            singleStrikeEvent = geolib.isPointWithinRadius(
                 {latitude: item.lat, longitude: item.long},
                 {latitude: locations[3].latitude, longitude: locations[3].longitude},
                 RangeRing
@@ -212,7 +214,7 @@ initialize().then(function(data) {
 
           //Kingsbay
           arr.forEach((item) => {
-              singleStrikeEvent = geolib.isPointInCircle(
+              singleStrikeEvent = geolib.isPointWithinRadius(
                   {latitude: item.lat, longitude: item.long},
                   {latitude: locations[4].latitude, longitude: locations[4].longitude},
                   RangeRing
