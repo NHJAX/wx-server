@@ -7,7 +7,7 @@ let log = console.log
 //Timer
 var CronJob = require('cron').CronJob;
 //Size of station range ring in meters
-var RangeRing = 32187;
+var RangeRing = 3218700;
 
 console.log(geolib);
 
@@ -102,7 +102,7 @@ initialize().then(function(data) {
            {latitude: locations[0].latitude, longitude: locations[0].longitude}
          );
 //The distance of strike from the station is calculated
-         distance = geolib.getDistance(
+         distance = geolib.getPreciseDistance(
            {latitude: item.lat, longitude: item.long},
            {latitude: locations[0].latitude, longitude: locations[0].longitude}
          );
@@ -134,7 +134,7 @@ initialize().then(function(data) {
              {latitude: item.lat, longitude: item.long},
              {latitude: locations[1].latitude, longitude: locations[1].longitude}
            );
-           distance = geolib.getDistance(
+           distance = geolib.getPreciseDistance(
              {latitude: item.lat, longitude: item.long},
              {latitude: locations[1].latitude, longitude: locations[1].longitude}
            );
@@ -164,7 +164,7 @@ initialize().then(function(data) {
                {latitude: item.lat, longitude: item.long},
                {latitude: locations[2].latitude, longitude: locations[2].longitude}
              );
-             distance = geolib.getDistance(
+             distance = geolib.getPreciseDistance(
                {latitude: item.lat, longitude: item.long},
                {latitude: locations[2].latitude, longitude: locations[2].longitude}
              );
@@ -194,7 +194,7 @@ initialize().then(function(data) {
                  {latitude: item.lat, longitude: item.long},
                  {latitude: locations[3].latitude, longitude: locations[3].longitude}
                );
-               distance = geolib.getDistance(
+               distance = geolib.getPreciseDistance(
                  {latitude: item.lat, longitude: item.long},
                  {latitude: locations[3].latitude, longitude: locations[3].longitude}
                );
@@ -224,7 +224,7 @@ initialize().then(function(data) {
                    {latitude: item.lat, longitude: item.long},
                    {latitude: locations[4].latitude, longitude: locations[4].longitude}
                  );
-                 distance = geolib.getDistance(
+                 distance = geolib.getPreciseDistance(
                    {latitude: item.lat, longitude: item.long},
                    {latitude: locations[4].latitude, longitude: locations[4].longitude}
                  );
