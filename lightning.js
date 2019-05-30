@@ -352,5 +352,5 @@ log('strikeEventArr',strikeEventArr);
 
 });
 };
-// new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
-Lightning()
+new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
+// Lightning()
