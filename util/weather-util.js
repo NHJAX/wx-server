@@ -173,29 +173,30 @@ module.exports = {
     data.timestamp = timestamp.tz('America/New_York').format();
     data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS");
 
-    var awosTemp = data['AWOS']['temperature'];
-    var awosTempC = data['AWOS']['tempC'];
+    //var awosTemp = data['AWOS']['temperature'];
+    //var awosTempC = data['AWOS']['tempC'];
     var boxTempC = data['temperature'];
-    var boxTempF = data['temperature'] * 9 / 5 +32;
-    var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
-    var heatIndex = HI.heatIndex({temperature: boxTempF, humidity: data.humidity, fahrenheit: true});
-    data.tempComparison = tempComparison;
-    data.tempsMatch = (tempComparison <=10)?true:false;
+    //var boxTempF = data['temperature'] * 9 / 5 +32;
+    //var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
+    var heatIndex = HI.heatIndex({temperature: boxTempC, humidity: data.humidity, fahrenheit: false});
+    //data.tempComparison = tempComparison;
+    //data.tempsMatch = (tempComparison <=10)?true:false;
 
 
 
-    data.temperatureAvg = boxTempC;//this.calcuateAvg(awosTempC, boxTempC);
+    //data.temperatureAvg = boxTempC;//this.calcuateAvg(awosTempC, boxTempC);
 
 
-    data.wbgtData = this.calculateWBGT(data);
-    data.flagColor = this.calculateFlagColor(heatIndex);//this.calculateFlagColor(data.wbgtData.wbgtF);
+    //data.wbgtData = this.calculateWBGT(data);
+    
     data.tempF = this.roundNumber(boxTempF);
     data.tempC = this.roundNumber(boxTempC);
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
-    data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
-    data.heatIndex = heatIndex.toFixed(2);
+    //data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
+    data.heatIndex = this.convertTempToF(heatIndex);
     data.feels = this.calculateFeelsMethods(data);
+    data.flagColor = this.calculateFlagColor(data.feels.awbgt);//this.calculateFlagColor(data.wbgtData.wbgtF);
 
     var windsFromDegrees = data['AWOS']['windDirection'];
 
@@ -212,7 +213,7 @@ module.exports = {
     previousFlagColor = data.flagColor;
 
 
-    console.log(`WBGT ${data.wbgt} @ ${data.sqlDate}`);
+    console.log(`WBGT ${data.feels.awbgt} @ ${data.sqlDate}`);
 
     return data;
 
