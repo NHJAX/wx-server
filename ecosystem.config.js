@@ -3,7 +3,7 @@ module.exports = {
     name: 'wxApi',
     script: 'node app.js',
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
-    instances: max,
+    instances: "max",
     autorestart: true,
     watch: false,
     max_memory_restart: '1G',
@@ -18,7 +18,7 @@ module.exports = {
     name: 'Skynet',
     script: 'node skynet.js',
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
-    instances: max,
+    instances: "max",
     autorestart: true,
     watch: false,
     max_memory_restart: '1G',
@@ -33,7 +33,7 @@ module.exports = {
     name: 'LightningApp',
     script: 'node lightning.js',
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
-    instances: max,
+    instances: "max",
     autorestart: true,
     watch: false,
     max_memory_restart: '1G',
