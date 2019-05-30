@@ -193,8 +193,10 @@ module.exports = {
 
     //data.wbgtData = this.calculateWBGT(data);
     
-    data.tempF = this.roundNumber(boxTempF);
+    // data.tempF = this.roundNumber(boxTempF);
     data.tempC = this.roundNumber(boxTempC);
+
+    data.tempF = this.convertTempToF(boxTempC);
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     //data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
