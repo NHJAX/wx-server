@@ -88,9 +88,9 @@ module.exports = {
     .then(([metars, alerts]) => {
 
 
-      // console.log("then*******************************************");
-      // console.log(metars);
-      // console.log("then*******************************************");
+      console.log("then*******************************************");
+      console.log(metars);
+      console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
 
@@ -166,6 +166,10 @@ module.exports = {
   },
 
   createWeatherBody: function(data) {
+    console.log("createWeatherBody*******************************************");
+      console.log(data);
+      console.log("createWeatherBody*******************************************");
+
 
     data.isoDate = Date.now();
     var timestamp = moment();
