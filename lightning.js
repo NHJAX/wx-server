@@ -33,11 +33,22 @@ function Lightning(){
   var keywestDistance = 0
   var albanyDistance = 0
   var kingsbayDistance = 0
+  var jacksonvilleBearing = 0
+  var mayportBearing = 0
+  var keywestBearing = 0
+  var albanyBearing = 0
+  var kingsbayBearing = 0
   var stormCenterjacksonville = 0
   var stormCentermayport = 0
   var stormCenteralbany = 0
   var stormCenterkeywest = 0
   var stormCenterkingsbay = 0
+  var stormDirectionjacksonville = 0
+  var stormDirectionmayport = 0
+  var stormDirectionkeywest = 0
+  var stormDirectionalbany = 0
+  var stormDirectionkingsbay = 0
+
 //define hospitals
 
 var locations = [
@@ -95,38 +106,28 @@ initialize().then(function(data) {
   }
   util.inspect.defaultOptions.maxArrayLength = null;
 
-//Parsing through each item to determine if strike was at any assigned station
   arr.forEach((item) => {
-//Strike is plotted with a range ring around the station
       singleStrikeEvent = geolib.isPointWithinRadius(
-//location of strike
           {latitude: item.lat, longitude: item.long},
-//location of station
           {latitude: locations[0].latitude, longitude: locations[0].longitude},
-//Size of range ring in meters
           RangeRing
        )
-//The direction of strike from the station is calculated
        if(singleStrikeEvent === true) {
-         direction = geolib.getCompassDirection(
+         direction = geolib.getRhumbLineBearing(
            {latitude: item.lat, longitude: item.long},
            {latitude: locations[0].latitude, longitude: locations[0].longitude}
          );
-//The distance of strike from the station is calculated
          distance = geolib.getPreciseDistance(
            {latitude: item.lat, longitude: item.long},
            {latitude: locations[0].latitude, longitude: locations[0].longitude}
          );
-//The stations name is placed into memory
          loc = locations[0].name
-//A sort is performed to format the collected data
          if(loc == "Jacksonville") {
-//Total number of strikes with in the range ring is counted
            jacksonvilleStrikeCount = jacksonvilleStrikeCount + 1;
             };
-//This object will be included in future upgrades which includes location of station direction and distance of strike
          var objToPush = {};
          jacksonvilleDistance = jacksonvilleDistance + distance;
+         jacksonvilleBearing = jacksonvilleBearing + direction;
          objToPush.location = loc;
          objToPush.direction = direction;
          objToPush.distance = distance;
@@ -142,7 +143,7 @@ initialize().then(function(data) {
             RangeRing
          )
          if(singleStrikeEvent === true) {
-           direction = geolib.getCompassDirection(
+           direction = geolib.getRhumbLineBearing(
              {latitude: item.lat, longitude: item.long},
              {latitude: locations[1].latitude, longitude: locations[1].longitude}
            );
@@ -157,6 +158,7 @@ initialize().then(function(data) {
            };
            var objToPush = {};
            mayportDistance = mayportDistance + distance;
+           mayportBearing = mayportBearing + direction;
            objToPush.location = loc;
            objToPush.direction = direction;
            objToPush.distance = distance;
@@ -173,7 +175,7 @@ initialize().then(function(data) {
               RangeRing
            )
            if(singleStrikeEvent === true) {
-             direction = geolib.getCompassDirection(
+             direction = geolib.getRhumbLineBearing(
                {latitude: item.lat, longitude: item.long},
                {latitude: locations[2].latitude, longitude: locations[2].longitude}
              );
@@ -188,6 +190,7 @@ initialize().then(function(data) {
              };
              var objToPush = {};
              keywestDistance = keywestDistance + distance;
+             keywestBearing = keywestBearing + direction;
              objToPush.location = loc;
              objToPush.direction = direction;
              objToPush.distance = distance;
@@ -204,7 +207,7 @@ initialize().then(function(data) {
                 RangeRing
              )
              if(singleStrikeEvent === true) {
-               direction = geolib.getCompassDirection(
+               direction = geolib.getRhumbLineBearing(
                  {latitude: item.lat, longitude: item.long},
                  {latitude: locations[3].latitude, longitude: locations[3].longitude}
                );
@@ -219,6 +222,7 @@ initialize().then(function(data) {
                };
                var objToPush = {};
                albanyDistance = albanyDistance + distance;
+               albanyBearing = albanyBearing + direction;
                objToPush.location = loc;
                objToPush.direction = direction;
                objToPush.distance = distance;
@@ -235,7 +239,7 @@ initialize().then(function(data) {
                   RangeRing
                )
                if(singleStrikeEvent === true) {
-                 direction = geolib.getCompassDirection(
+                 direction = geolib.getRhumbLineBearing(
                    {latitude: item.lat, longitude: item.long},
                    {latitude: locations[4].latitude, longitude: locations[4].longitude}
                  );
@@ -249,6 +253,7 @@ initialize().then(function(data) {
                  };
                  var objToPush = {};
                  kingsbayDistance = kingsbayDistance + distance;
+                 kingsbayBearing = kingsbayBearing + direction;
                  objToPush.location = loc;
                  objToPush.direction = direction;
                  objToPush.distance = distance;
@@ -257,20 +262,24 @@ initialize().then(function(data) {
                }
             );
   sd = jacksonvilleStrikeCount + mayportStrikeCount + keywestStrikeCount + albanyStrikeCount + kingsbayStrikeCount;
-  stormCenterjacksonville = jacksonvilleDistance / jacksonvilleStrikeCount
-  stormCentermayport = mayportDistance / mayportStrikeCount
-  stormCenterkeywest = keywestDistance / keywestStrikeCount
-  stormCenteralbany = albanyDistance / albanyStrikeCount
-  stormCenterkingsbay = kingsbayDistance / kingsbayStrikeCount
-
+  stormCenterjacksonville = Math.trunc(jacksonvilleDistance / jacksonvilleStrikeCount)
+  stormCentermayport = Math.trunc(mayportDistance / mayportStrikeCount)
+  stormCenterkeywest = Math.trunc(keywestDistance / keywestStrikeCount)
+  stormCenteralbany = Math.trunc(albanyDistance / albanyStrikeCount)
+  stormCenterkingsbay = Math.trunc(kingsbayDistance / kingsbayStrikeCount)
+  stormDirectionjacksonville = Math.trunc(jacksonvilleBearing / jacksonvilleStrikeCount)
+  stormDirectionmayport = Math.trunc(mayportBearing / mayportStrikeCount)
+  stormDirectionkeywest = Math.trunc(keywestBearing / keywestStrikeCount)
+  stormDirectionalbany = Math.trunc(albanyBearing / albanyStrikeCount)
+  stormDirectionkingsbay = Math.trunc(kingsbayBearing / kingsbayStrikeCount)
   if(jacksonvilleStrikeCount > 0){
     strikeEventObj = {
       "LightningDetected": "Yes",
       "Location": "Jax",
       "Type": "Lightning",
+      "Bearing": stormDirectionjacksonville,
       "strikesDetected": jacksonvilleStrikeCount,
       "StormCenter": stormCenterjacksonville
-
     }
     strikeEventArr.push(strikeEventObj)
   }
@@ -279,6 +288,7 @@ initialize().then(function(data) {
       "LightningDetected": "Yes",
       "Location": "Mayport",
       "Type": "Lightning",
+      "Bearing": stormDirectionmayport,
       "strikesDetected": mayportStrikeCount,
       "StormCenter": stormCentermayport
     }
@@ -289,6 +299,7 @@ initialize().then(function(data) {
       "LightningDetected": "Yes",
       "Location": "Keywest",
       "Type": "Lightning",
+      "Bearing": stormDirectionkeywest,
       "strikesDetected": keywestStrikeCount,
       "StormCenter": stormCenterkeywest
 
@@ -300,6 +311,7 @@ initialize().then(function(data) {
       "LightningDetected": "Yes",
       "Location": "Albany",
       "Type": "Lightning",
+      "Bearing": stormDirectionalbany,
       "strikesDetected": albanyStrikeCount,
       "StormCenter": stormCenteralbany
     }
@@ -310,6 +322,7 @@ initialize().then(function(data) {
       "LightningDetected": "Yes",
       "Location": "Kingsbay",
       "Type": "Lightning",
+      "Bearing": stormDirectionkingsbay,
       "strikesDetected": kingsbayStrikeCount,
       "StormCenter": stormCenterkingsbay
     }
@@ -320,6 +333,7 @@ initialize().then(function(data) {
     "LightningDetected": "No",
     "Location": "None",
     "Type": "Lightning",
+    "Bearing": "0",
     "strikesDetected": "0",
     "StormCenter": "0"
   }
@@ -338,5 +352,5 @@ log('strikeEventArr',strikeEventArr);
 
 });
 };
-new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
-// Lightning()
+// new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
+Lightning()
