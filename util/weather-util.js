@@ -162,7 +162,7 @@ module.exports = {
           windDirection: wdd,
           temperature: this.convertTempToF(tempC),
           tempC: this.roundNumber(tempC),
-          humidity: feels.getRH(metarsArr.temperature, metarsArr.dewpointC, {dewPoint:true})
+          humidity: Feels.getRH(metarsArr.temperature, metarsArr.dewpointC, {dewPoint:true})
           };
 
         previousAWOSData = awosData;
