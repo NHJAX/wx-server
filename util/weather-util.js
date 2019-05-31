@@ -160,8 +160,8 @@ module.exports = {
           wind_speed_mps: this.roundNumber(mps),
           sea_level_pressure: slp,
           windDirection: wdd,
-          temperature: this.roundNumber(tempF),
-          tempC: this.convertTempToF(tempC),
+          temperature: this.convertTempToF(tempC),
+          tempC: this.roundNumber(tempC),
           humidity: feels.getRH(metarsArr.temperature, metarsArr.dewpointC, {dewPoint:true})
           };
 
