@@ -234,11 +234,11 @@ module.exports = {
 
   calculateFlagColor: function(wbgtf) {
     //Flag Color
-    if (wbgtf <= 84.9) {
+    if (wbgtf <= 84.99) {
       return 'green';
-    } else if (wbgtf >= 85 && wbgtf <= 87.9) {
+    } else if (wbgtf >= 85 && wbgtf <= 87.99) {
       return 'yellow';
-    } else if (wbgtf >= 88 && wbgtf <= 89.9){
+    } else if (wbgtf >= 88 && wbgtf <= 89.99){
       return 'red';
     } else {
       return 'black';
@@ -281,7 +281,7 @@ module.exports = {
     var feelsLike = new Feels(config).toF().like();
     var awbgt = Feels.AWBGT(data.temperature, data.humidity);
 
-    feelsObj.heatIndex = feelsLike.toFixed(2);
+    feelsObj.heatIndex = feelsLike.toFixed(1);
     feelsObj.awbgt = this.convertTempToF(awbgt);//Feels.tempConvert(awbgt, 'c', 'f').toFixed(2);//convertTempToF(awbgt);
 
     return feelsObj;
@@ -295,7 +295,7 @@ module.exports = {
 
   convertTempToF: function(temp) {
     var ct = Feels.tempConvert(temp, 'c', 'f');
-    return ct.toFixed(2); //Math.round((temp *1.8) +32);
+    return ct.toFixed(1); //Math.round((temp *1.8) +32);
 
   },
 
