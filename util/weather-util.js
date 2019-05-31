@@ -127,7 +127,8 @@ module.exports = {
                 wind_speed_mps: 0,
                 sea_level_pressure: 0,
                 windDirection: 0,
-                temperature: 0
+                temperature: 0,
+                dewpointC: 0
               };
         }
 
@@ -151,7 +152,6 @@ module.exports = {
 
         var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
         var tempC = parseInt(metarsArr.temp_c);
-        var tempF = tempC * (9/5) + 32;
 
 
         awosData = {
@@ -161,8 +161,9 @@ module.exports = {
           sea_level_pressure: slp,
           windDirection: wdd,
           temperature: this.roundNumber(tempF),
-          tempC: this.roundNumber(tempC)
-        };
+          tempC: this.convertTempToF(tempC),
+          humidity: feels.getRH(metarsArr.temperature, metarsArr.dewpointC, {dewPoint:true})
+          };
 
         previousAWOSData = awosData;
 
@@ -185,11 +186,23 @@ module.exports = {
     data.sqlDate = timestamp.tz('America/New_York').format("YYYY-MM-DD HH:mm:ss.SSS");
 
     //var awosTemp = data['AWOS']['temperature'];
-    //var awosTempC = data['AWOS']['tempC'];
-    var boxTempC = data['temperature'];
+    var atc = data['AWOS']['tempC']; //awosTemp in Cel
+    var btc = data['temperature'];   //box temp in Cel
+    var averageTempC = this.calcuateAvg(atc, btc);
+
+    data.tempC = averageTempC
+    data.tempF = this.convertTempToF(averageTempC);
+
+
+    var ah = data['AWOS']['humidity'];  //awos Humidity
+    var bh = data['humidity'];          // box humidity
+    var avgHum = this.calcuateAvg(ah,bh);
+    data.avgHum = avgHum
+
+
     //var boxTempF = data['temperature'] * 9 / 5 +32;
     //var tempComparison = (Math.abs(awosTemp - boxTempF)).toFixed(2);
-    var heatIndex = HI.heatIndex({temperature: boxTempC, humidity: data.humidity, fahrenheit: false});
+    var heatIndex = HI.heatIndex({temperature: tempC, humidity: avgHum, fahrenheit: false});
     //data.tempComparison = tempComparison;
     //data.tempsMatch = (tempComparison <=10)?true:false;
 
@@ -201,9 +214,9 @@ module.exports = {
     //data.wbgtData = this.calculateWBGT(data);
     
     // data.tempF = this.roundNumber(boxTempF);
-    data.tempC = this.roundNumber(boxTempC);
+    //data.tempC = this.roundNumber(boxTempC);
 
-    data.tempF = this.convertTempToF(boxTempC);
+    //data.tempF = this.convertTempToF(boxTempC);
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     //data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
@@ -266,8 +279,8 @@ module.exports = {
 
     //console.log(data);
     const config = {
-      temp: data.temperature,
-      humidity: data.humidity,
+      temp: data.tempC,
+      humidity: data.avgHum,
       speed: parseInt(data['AWOS']['wind_speed_mps']),
       units: {
         temp: 'c',
