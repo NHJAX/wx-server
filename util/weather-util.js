@@ -152,6 +152,8 @@ module.exports = {
 
         var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
         var tempC = parseInt(metarsArr.temp_c);
+        var dewPoint = parseInt(metarsArr.dewpointC);
+        console.log(tempC,dewPoint);
 
 
         awosData = {
@@ -162,7 +164,7 @@ module.exports = {
           windDirection: wdd,
           temperature: this.convertTempToF(tempC),
           tempC: this.roundNumber(tempC),
-          humidity: Feels.getRH(tempC, metarsArr.dewpointC, {dewPoint:true})
+          humidity: Feels.getRH(tempC, dewPoint, {dewPoint:true})
           };
 
         previousAWOSData = awosData;
