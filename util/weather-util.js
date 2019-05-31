@@ -28,6 +28,13 @@ module.exports = {
 
   weatherAPIPromiseAll: function(locObj,weatherDataBody) {
 
+
+    console.log("then*******************************************");
+    console.log(locObj);
+    console.log(weatherDataBody);
+    console.log("then*******************************************");
+
+
       return Promise.all([
         ADDS('metars', {
           stationString: locObj.awosStationId,
@@ -73,7 +80,7 @@ module.exports = {
                 if (previousAlert === TwitterWarning) {
 
                 } else {
-                  tobytweeter.sendTweet(TwitterWarning);
+                  //tobytweeter.sendTweet(TwitterWarning);
                 }
                 previousAlert = TwitterWarning;
 
@@ -88,9 +95,9 @@ module.exports = {
     .then(([metars, alerts]) => {
 
 
-      console.log("then*******************************************");
-      console.log(metars);
-      console.log("then*******************************************");
+      // console.log("then*******************************************");
+      // console.log(metars);
+      // console.log("then*******************************************");
       weatherDataBody.AWOS = this.getAWOS(metars);
       weatherDataBody.WarnWatchAdvise = alerts;
 
@@ -166,7 +173,7 @@ module.exports = {
   },
 
   createWeatherBody: function(data) {
-    console.log("createWeatherBody*******************************************");
+      console.log("createWeatherBody*******************************************");
       console.log(data);
       console.log("createWeatherBody*******************************************");
 
@@ -214,12 +221,12 @@ module.exports = {
 
 
     if (data.flagColor !== previousFlagColor) {
-      tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
+      //tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
     }
     previousFlagColor = data.flagColor;
 
 
-    console.log(`WBGT ${data.feels.awbgt} @ ${data.sqlDate}`);
+ //console.log(`WBGT ${data.feels.awbgt} @ ${data.sqlDate}`);
 
     return data;
 
