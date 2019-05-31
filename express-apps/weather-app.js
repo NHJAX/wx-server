@@ -35,8 +35,9 @@ weatherApp.post('/:location', [
 
         var location = req.params.location;
         var body = req.body;
+        var bodyLoc = req.body.location;
 
-        let locationObj = locationArray.find(o => o.location === location);
+        let locationObj = locationArray.find(o => o.location === bodyLoc);
 
         const postData = async () => {
 
@@ -55,7 +56,7 @@ weatherApp.post('/:location', [
 
 
 
-                var currentRef = db.collection(weatherData.location+'Weather');
+                var currentRef = db.collection(location+'Weather');
                 currentRef.add(weatherData)
                     .then(ref => {
                         if (ref) {
