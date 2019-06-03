@@ -4,7 +4,8 @@ const util = require('util')
 var path = require('path');
 var fs = require('fs');
 var moment = require('moment');
-var tobytweeter = require('/util/Toby');
+
+var tobytweeter = require('./util/Toby.js');
 
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
