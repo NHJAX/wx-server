@@ -131,31 +131,31 @@ module.exports = {
       awosDown = false;
       var metarsArr = metars[0];
 
-      var wsk = parseInt(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
+      var wsk = this.convertToNumber(metarsArr.wind_speed_kt); //Winds in knots parsed into integer
       var a = 1.151; //knots to mph calculation magic number 1 knot = 1.151 MPH
       let wsm = a * wsk; //knots converted to MPH
       var b = 2.237; //MPH to MPS calculation magic number 2.237
       let mps = wsm / b; //MPH converted to MPS
       let slp = metarsArr.sea_level_pressure_mb
       if (typeof slp === "number") {
-        slp = parseInt(slp); //Sea level pressure parsed into integer
+        slp = this.convertToNumber(slp); //Sea level pressure parsed into integer
       } else {
         slp = 0;
       }
 
-      var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
-      var tempC = parseInt(metarsArr.temp_c);
-      var dewPoint = parseInt(metarsArr.dewpoint_c);
+      var wdd = this.convertToNumber(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
+      var tempC = this.convertToNumber(metarsArr.temp_c);
+      var dewPoint = this.convertToNumber(metarsArr.dewpoint_c);
 
       awosData = {
-        wind_speed_kt: parseInt(this.roundNumber(wsk)),
-        wind_speed_mph: parseInt(this.roundNumber(wsm)),
-        wind_speed_mps: parseInt(this.roundNumber(mps)),
-        sea_level_pressure: parseInt(slp),
+        wind_speed_kt: this.roundNumber(wsk),
+        wind_speed_mph: this.roundNumber(wsm),
+        wind_speed_mps: this.roundNumber(mps),
+        sea_level_pressure: this.convertToNumber(slp),
         windDirection: wdd,
-        temperature: parseInt(this.convertTempToF(tempC)),
-        tempC: parseInt(this.roundNumber(tempC)),
-        humidity: parseInt(this.roundNumber(Feels.getRH(tempC, dewPoint, { dewPoint: true })))
+        temperature: this.convertTempToF(tempC),
+        tempC: this.roundNumber(tempC),
+        humidity: this.roundNumber(Feels.getRH(tempC, dewPoint, { dewPoint: true }))
       };
 
       previousAWOSData = awosData;
@@ -263,7 +263,7 @@ module.exports = {
     const config = {
       temp: data.tempC,
       humidity: data.humidity,
-      speed: parseInt(data['AWOS']['wind_speed_mps']),
+      speed: this.convertToNumber(data['AWOS']['wind_speed_mps']),
       units: {
         temp: 'c',
         speed: 'mps'
@@ -275,7 +275,7 @@ module.exports = {
     var feelsLike = new Feels(config).toF().like();
     var awbgt = Feels.AWBGT(data.temperature, data.humidity);
 
-    feelsObj.heatIndex = feelsLike.toFixed(1);
+    feelsObj.heatIndex = this.roundNumber(feelsLike);//.toFixed(1);
     feelsObj.awbgt = this.convertTempToF(awbgt);
 
     return feelsObj;
@@ -289,18 +289,24 @@ module.exports = {
 
   convertTempToF: function (temp) {
     var ct = Feels.tempConvert(temp, 'c', 'f');
-    return parseInt(ct.toFixed(1));
+    
+    return this.roundNumber(ct,1);//parseInt(ct.toFixed(1));
 
   },
 
-  roundNumber: function (x) {
-    return Number.parseFloat(x).toFixed(0);
+  roundNumber: function (num,dec) {
+    if (!dec) {dec = 0;}
+    return Number.parseFloat(num).toFixed(dec);
   },
 
   calcuateAvg: function (a, b) {
     var avg;
     avg = (Number(a) + Number(b)) / 2;
     return parseInt(avg);
+  },
+  
+  convertToNumber: function (e) {
+    return Number(e);
   }
 
 };
