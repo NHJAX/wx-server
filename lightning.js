@@ -4,6 +4,7 @@ const util = require('util')
 var path = require('path');
 var fs = require('fs');
 var moment = require('moment');
+var tobytweeter = require('../util/Toby');
 
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
@@ -241,7 +242,7 @@ log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
 
 function uploadData(strike, location) {
-  sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+  tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
 
   request({
       headers: {
