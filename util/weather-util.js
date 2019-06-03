@@ -128,7 +128,7 @@ module.exports = {
                 sea_level_pressure: 0,
                 windDirection: 0,
                 temperature: 0,
-                dewpointC: 0
+                humidity: 0
               };
         }
 
@@ -152,7 +152,7 @@ module.exports = {
 
         var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
         var tempC = parseInt(metarsArr.temp_c);
-        var dewPoint = parseInt(metarsArr.dewpointC);
+        var dewPoint = parseInt(metarsArr.dewpoint_c);
         console.log(tempC,dewPoint);
 
 
@@ -214,7 +214,7 @@ module.exports = {
 
 
     //data.wbgtData = this.calculateWBGT(data);
-    
+
     // data.tempF = this.roundNumber(boxTempF);
     //data.tempC = this.roundNumber(boxTempC);
 
@@ -291,7 +291,7 @@ module.exports = {
     };
 
     //console.log(config);
-     
+
     var feelsObj = {};
     var feelsLike = new Feels(config).toF().like();
     var awbgt = Feels.AWBGT(data.temperature, data.humidity);
