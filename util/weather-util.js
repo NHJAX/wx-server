@@ -218,7 +218,7 @@ module.exports = {
     data.feels = this.calculateFeelsMethods(data);
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
     if (data.flagColor === previousFlagColor) {
-      console.log('Flag colors match. No new update to database');
+      console.log('Flag colors match. No new update to database. WBGT ->', data.awbgt);
       console.log("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
       return 'no update';
     } else {
