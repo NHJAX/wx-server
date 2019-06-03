@@ -4,7 +4,7 @@ const util = require('util')
 var path = require('path');
 var fs = require('fs');
 var moment = require('moment');
-
+var previousLocation = "";
 var tobytweeter = require('./util/Toby.js');
 
 //location of lightning data from WWLLN
@@ -243,7 +243,10 @@ log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
 
 function uploadData(strike, location) {
-  tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+  if (strike.location !== previousLocation) {
+    tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+  }
+  previousLocation = strike.location;
 
   request({
       headers: {
@@ -268,5 +271,5 @@ function uploadData(strike, location) {
 // cT = '* 1 * * * *';
 // log(cT)
 };
-new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
+new CronJob('*/10 * * * * ', Lightning, null, true,'America/New_York');
 // Lightning()
