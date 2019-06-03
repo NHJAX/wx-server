@@ -290,7 +290,7 @@ module.exports = {
   convertTempToF: function (temp) {
     var ct = Feels.tempConvert(temp, 'c', 'f');
     
-    return this.roundNumber(ct,1);//parseInt(ct.toFixed(1));
+    return parseInt(ct.toFixed(1));
 
   },
 
