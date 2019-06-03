@@ -97,7 +97,7 @@ function populateStrikeEventObj(ld, loc, type, bearing, numOfStrikes, stormCente
     "Bearing": bearing,
     "strikesDetected": numOfStrikes,
     "StormCenter": stormCenter,
-    "TimeStamp": timestamp.tz('America/New_York').format();
+    "TimeStamp": timestamp.tz('America/New_York').format()
   };
 }
 
