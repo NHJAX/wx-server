@@ -153,7 +153,7 @@ module.exports = {
         wind_speed_mps: this.roundNumber(mps),
         sea_level_pressure: this.convertToNumber(slp),
         windDirection: wdd,
-        temperature: this.convertTempToF(tempC),
+        tempF: this.convertTempToF(tempC),
         tempC: this.roundNumber(tempC),
         humidity: this.roundNumber(Feels.getRH(tempC, dewPoint, { dewPoint: true }))
       };
@@ -182,7 +182,8 @@ module.exports = {
     btc = data['temperature'];   // box temp in Cel
     bh = data['humidity'];       // box humidity
 
-    if (!awosDown) {
+    if (awosDown === false) {
+
       atc = data['AWOS']['tempC']; //awosTemp in Cel
       averageTempC = this.calcuateAvg(atc, btc);
 
