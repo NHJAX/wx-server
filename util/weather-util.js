@@ -290,13 +290,17 @@ module.exports = {
   convertTempToF: function (temp) {
     var ct = Feels.tempConvert(temp, 'c', 'f');
     
-    return this.roundNumber(ct,1);//parseInt(ct.toFixed(1));
+    return parseInt(ct.toFixed(1));
 
   },
 
   roundNumber: function (num,dec) {
-    if (!dec) {dec = 0;}
-    return Number.parseFloat(num).toFixed(dec);
+    if (!dec) {
+      return parseInt(num)
+    } else {
+      return Number.parseFloat(num).toFixed(1);
+    }
+    
   },
 
   calcuateAvg: function (a, b) {
