@@ -239,7 +239,7 @@ initialize().then(function(data) {
     strikeEventArr.push(noneObj);
     uploadData(noneObj, 'none');
 }
-log('strikeEventArr',strikeEventArr);
+// log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
 
 function uploadData(strike, location) {
