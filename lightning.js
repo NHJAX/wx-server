@@ -243,16 +243,12 @@ initialize().then(function(data) {
 // strikEventArr = JSON.parse(strikeEventArr);
 
 function uploadData(strike, location) {
-  // if (location === "none" && location != previousLocation){
-  //   tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
-  // }else if (location !== previousLocation) {
-  //   tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
-  // }
-
-    log(location);
-
-
-  previousLocation = strike.location;
+  if (location === "none" && location !== previousLocation){
+    tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
+  }else if (location !== previousLocation) {
+    tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+  }
+  previousLocation = location;
 
   request({
       headers: {
