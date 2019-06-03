@@ -273,7 +273,7 @@ module.exports = {
 
     console.log('Feels Methods',data);
     const config = {
-      temp: data.averageTempC,
+      temp: data.tempC,
       humidity: data.humidity,
       speed: parseInt(data['AWOS']['wind_speed_mps']),
       units: {
