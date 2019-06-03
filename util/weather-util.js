@@ -205,10 +205,10 @@ module.exports = {
     var heatIndex = HI.heatIndex({ temperature: averageTempC, humidity: avgHum, fahrenheit: false });
     data.heatIndex = this.convertTempToF(heatIndex);
 
-    
+
     data.pressure = this.roundNumber(data['AWOS']['sea_level_pressure']);
     //data.wbgt = this.roundNumber(data.wbgtData.wbgtF);
-    
+
     data.winds = this.roundNumber(data['AWOS']['wind_speed_mph']);
     var windsFromDegrees = data['AWOS']['windDirection'];
     if (windsFromDegrees) {
@@ -218,7 +218,7 @@ module.exports = {
     data.feels = this.calculateFeelsMethods(data);
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
     if (data.flagColor === previousFlagColor) {
-      console.log('Flag colors match. No new update to database. WBGT ->', data.awbgt);
+      console.log('Flag colors match. No new update to database. WBGT ->', data.feels.awbgt);
       console.log("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
       return 'no update';
     } else {
@@ -289,18 +289,18 @@ module.exports = {
 
   convertTempToF: function (temp) {
     var ct = Feels.tempConvert(temp, 'c', 'f');
-    
+
     return parseInt(ct.toFixed(1));
 
-  },
+  }, 
 
-  roundNumber: function (num,dec) {
+  roundNumber: function (num, dec) {
     if (!dec) {
       return parseInt(num)
     } else {
       return Number.parseFloat(num).toFixed(1);
     }
-    
+
   },
 
   calcuateAvg: function (a, b) {
@@ -308,7 +308,7 @@ module.exports = {
     avg = (Number(a) + Number(b)) / 2;
     return parseInt(avg);
   },
-  
+
   convertToNumber: function (e) {
     return Number(e);
   }
