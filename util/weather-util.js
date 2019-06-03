@@ -256,7 +256,7 @@ module.exports = {
 
     var wbgtData = {};
 
-    var AvgTempCelsius = data.temperatureAvg;
+    var AvgTempCelsius = data.averageTempC;
     var HumidityFromSensor = data.humidity;
     var WindsInMPS = data.AWOS.wind_speed_mps;
 
@@ -273,7 +273,7 @@ module.exports = {
 
     //console.log(data);
     const config = {
-      temp: data.tempC,
+      temp: data.averageTempC,
       humidity: data.humidity,
       speed: parseInt(data['AWOS']['wind_speed_mps']),
       units: {
