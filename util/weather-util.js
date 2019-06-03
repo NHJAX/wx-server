@@ -295,8 +295,12 @@ module.exports = {
   },
 
   roundNumber: function (num,dec) {
-    if (!dec) {dec = 0;}
-    return Number.parseFloat(num).toFixed(dec);
+    if (!dec) {
+      return parseInt(num)
+    } else {
+      return Number.parseFloat(num).toFixed(1);
+    }
+    
   },
 
   calcuateAvg: function (a, b) {
