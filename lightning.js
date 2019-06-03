@@ -260,5 +260,5 @@ function uploadData(strikeEventArr, location) {
 // cT = '* 1 * * * *';
 // log(cT)
 };
-//new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
-Lightning()
+new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
+// Lightning()
