@@ -28,13 +28,8 @@ const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
 module.exports = {
 
   weatherAPIPromiseAll: function (locObj, weatherDataBody) {
-
-
-    console.log("then*******************************************");
     console.log(locObj);
     console.log(weatherDataBody);
-    console.log("then*******************************************");
-
 
     return Promise.all([
       ADDS('metars', {
@@ -94,11 +89,6 @@ module.exports = {
       })
     ])
       .then(([metars, alerts]) => {
-
-
-        // console.log("then*******************************************");
-        // console.log(metars);
-        // console.log("then*******************************************");
         weatherDataBody.AWOS = this.getAWOS(metars);
         weatherDataBody.WarnWatchAdvise = alerts;
 
@@ -156,18 +146,16 @@ module.exports = {
       var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
       var tempC = parseInt(metarsArr.temp_c);
       var dewPoint = parseInt(metarsArr.dewpoint_c);
-      //console.log(tempC, dewPoint);
-
 
       awosData = {
-        wind_speed_kt: this.roundNumber(wsk),
-        wind_speed_mph: this.roundNumber(wsm),
-        wind_speed_mps: this.roundNumber(mps),
-        sea_level_pressure: slp,
+        wind_speed_kt: parseInt(this.roundNumber(wsk)),
+        wind_speed_mph: parseInt(this.roundNumber(wsm)),
+        wind_speed_mps: parseInt(this.roundNumber(mps)),
+        sea_level_pressure: parseInt(slp),
         windDirection: wdd,
-        temperature: this.convertTempToF(tempC),
-        tempC: this.roundNumber(tempC),
-        humidity: Feels.getRH(tempC, dewPoint, { dewPoint: true })
+        temperature: parseInt(this.convertTempToF(tempC)),
+        tempC: parseInt(this.roundNumber(tempC)),
+        humidity: parseInt(this.roundNumber(Feels.getRH(tempC, dewPoint, { dewPoint: true })))
       };
 
       previousAWOSData = awosData;
@@ -177,10 +165,11 @@ module.exports = {
   },
 
   createWeatherBody: function (data) {
+    /* 
     console.log("createWeatherBody*******************************************");
     console.log(data);
     console.log("createWeatherBody*******************************************");
-
+    */
 
     data.isoDate = Date.now();
     var timestamp = moment();
@@ -271,7 +260,6 @@ module.exports = {
 
   calculateFeelsMethods: function (data) {
 
-    console.log('Feels Methods',data);
     const config = {
       temp: data.tempC,
       humidity: data.humidity,
@@ -282,7 +270,6 @@ module.exports = {
       }
     };
 
-    console.log(config);
 
     var feelsObj = {};
     var feelsLike = new Feels(config).toF().like();
