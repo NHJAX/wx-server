@@ -249,9 +249,8 @@ function uploadData(strike, location) {
   //   tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
   // }
 
-  if (strike.length > 0) {
     log(strike.legth);
-  }
+  
 
   previousLocation = strike.location;
 
