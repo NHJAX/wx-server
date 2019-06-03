@@ -28,8 +28,8 @@ const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
 module.exports = {
 
   weatherAPIPromiseAll: function (locObj, weatherDataBody) {
-    console.log(locObj);
-    console.log(weatherDataBody);
+    //console.log(locObj);
+    //console.log(weatherDataBody);
 
     return Promise.all([
       ADDS('metars', {
@@ -104,9 +104,9 @@ module.exports = {
 
 
     var awosData = {};
-    console.log("getAWOS*******************************************");
-    console.log(metars);
-    console.log("getAWOS*******************************************");
+    //console.log("getAWOS*******************************************");
+    //console.log(metars);
+    //console.log("getAWOS*******************************************");
 
 
     if (metars === undefined || metars.length === 0) {
@@ -217,16 +217,14 @@ module.exports = {
 
     data.feels = this.calculateFeelsMethods(data);
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
-    if (data.flagColor !== previousFlagColor) {
+    if (data.flagColor === previousFlagColor) {
+      console.log('Flag colors match. No new update to database');
+      return 'no update';
+    } else {
       tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
+      previousFlagColor = data.flagColor;
+      return data;
     }
-    previousFlagColor = data.flagColor;
-
-
-    console.log(`aWBGT ${data.feels.awbgt} @ ${data.sqlDate}`);
-
-    return data;
-
   },
 
   calculateFlagColor: function (wbgtf) {

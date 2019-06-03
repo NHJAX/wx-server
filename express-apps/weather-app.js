@@ -53,6 +53,10 @@ weatherApp.post('/:location', [
 
         postData()
             .then((weatherData) => {
+                if (weatherData === 'no update'){
+                    console.log('flag colors match, no new update');
+                    return;
+                }
 
 
 
