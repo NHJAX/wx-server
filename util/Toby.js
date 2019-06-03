@@ -16,7 +16,7 @@ var Facebook_token = API_CONFIG["Facebook_token"];
 
 module.exports = {
   sendTweet: function(status){
-    //var status = 'Lightning detected within ' + body.DistanceKM + 'KM @ ' + body.Time;  // This is the tweet (ie status)
+    var status = 'Lightning detected within ' + body.DistanceKM + 'KM @ ' + body.Time;  // This is the tweet (ie status)
 
     var postBody = {
         'status': status
