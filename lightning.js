@@ -3,6 +3,7 @@ var request = require('request');
 const util = require('util')
 var path = require('path');
 var fs = require('fs');
+var moment = require('moment');
 
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
@@ -87,13 +88,16 @@ var locations = [
 var locLength = locations.length;
 
 function populateStrikeEventObj(ld, loc, type, bearing, numOfStrikes, stormCenter){
+
+  var timestamp = moment();
   return strikeEventObj = {
     "LightningDetected": ld,
     "Location": loc,
     "Type": type,
     "Bearing": bearing,
     "strikesDetected": numOfStrikes,
-    "StormCenter": stormCenter
+    "StormCenter": stormCenter,
+    "TimeStamp": timestamp.tz('America/New_York').format();
   };
 }
 
@@ -236,7 +240,9 @@ initialize().then(function(data) {
 log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
 
-function uploadData(strikeEventArr, location) {
+function uploadData(strike, location) {
+  sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+
   request({
       headers: {
           'NHJax-API-Key': "test",
@@ -244,7 +250,7 @@ function uploadData(strikeEventArr, location) {
         },
       url: server + location,
       method: "POST",
-      json: strikeEventArr
+      json: strike
   });
 }
 
