@@ -289,7 +289,7 @@ module.exports = {
 
   convertTempToF: function (temp) {
     var ct = Feels.tempConvert(temp, 'c', 'f');
-    return ct.toFixed(1);
+    return parseInt(ct.toFixed(1));
 
   },
 
@@ -300,7 +300,7 @@ module.exports = {
   calcuateAvg: function (a, b) {
     var avg;
     avg = (Number(a) + Number(b)) / 2;
-    return avg;
+    return parseInt(avg);
   }
 
 };
