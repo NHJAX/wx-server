@@ -156,7 +156,7 @@ module.exports = {
       var wdd = parseInt(metarsArr.wind_dir_degrees); //Wind Direction parsed into integer
       var tempC = parseInt(metarsArr.temp_c);
       var dewPoint = parseInt(metarsArr.dewpoint_c);
-      console.log(tempC, dewPoint);
+      //console.log(tempC, dewPoint);
 
 
       awosData = {
@@ -271,7 +271,7 @@ module.exports = {
 
   calculateFeelsMethods: function (data) {
 
-    //console.log(data);
+    console.log('Feels Methods',data);
     const config = {
       temp: data.averageTempC,
       humidity: data.humidity,
@@ -282,7 +282,7 @@ module.exports = {
       }
     };
 
-    //console.log(config);
+    console.log(config);
 
     var feelsObj = {};
     var feelsLike = new Feels(config).toF().like();
