@@ -3,6 +3,9 @@ var request = require('request');
 const util = require('util')
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
+const WORKING_DIR = path.resolve('../secret-config');
+const API_CONFIG = JSON.parse(fs.readFileSync(path.join(WORKING_DIR, 'api-config.json')));
+var server = API_CONFIG["lightning"];
 let log = console.log
 //Timer
 var CronJob = require('cron').CronJob;
@@ -198,24 +201,50 @@ initialize().then(function(data) {
   stormDirectionkingsbay = Math.trunc(kingsbayBearing / kingsbayStrikeCount)
 
   if(jacksonvilleStrikeCount > 0){
-    strikeEventArr.push(populateStrikeEventObj("Yes", "Jax", "Lightning", stormDirectionjacksonville, jacksonvilleStrikeCount, stormCenterjacksonville));
+    var jaxObj = populateStrikeEventObj("Yes", "Jax", "Lightning", stormDirectionjacksonville, jacksonvilleStrikeCount, stormCenterjacksonville)
+    strikeEventArr.push(jaxObj);
+    uploadData(jaxObj, 'jax');
   }
   if(mayportStrikeCount > 0){
-    strikeEventArr.push(populateStrikeEventObj("Yes", "Mayport", "Lightning", stormDirectionmayport, mayportStrikeCount, stormCentermayport));
+    var mayportObj = populateStrikeEventObj("Yes", "Mayport", "Lightning", stormDirectionmayport, mayportStrikeCount, stormCentermayport)
+    strikeEventArr.push(mayportObj);
+    uploadData(mayportObj, 'mayport');
   }
   if(keywestStrikeCount > 0){
-    strikeEventArr.push(populateStrikeEventObj("Yes", "Keywest", "Lightning", stormDirectionkeywest, keywestStrikeCount, stormCenterkeywest));
+    var keywestObj = populateStrikeEventObj("Yes", "Keywest", "Lightning", stormDirectionkeywest, keywestStrikeCount, stormCenterkeywest)
+    strikeEventArr.push(keywestObj);
+    uploadData(keywestObj, 'keywest');
   }
   if(albanyStrikeCount > 0){
-    strikeEventArr.push(populateStrikeEventObj("Yes", "Albany", "Lightning", stormDirectionalbany, albanyStrikeCount, stormCenteralbany));
+    var albanyObj = populateStrikeEventObj("Yes", "Albany", "Lightning", stormDirectionalbany, albanyStrikeCount, stormCenteralbany)
+    strikeEventArr.push(albanyObj);
+    uploadData(albanyObj, 'albany');
   }
   if(kingsbayStrikeCount > 0){
-    strikeEventArr.push(populateStrikeEventObj("Yes", "Kingsbay", "Lightning", stormDirectionkingsbay, kingsbayStrikeCount, stormCenterkingsbay));
+    var kingsbayObj = populateStrikeEventObj("Yes", "Kingsbay", "Lightning", stormDirectionkingsbay, kingsbayStrikeCount, stormCenterkingsbay)
+    strikeEventArr.push(kingsbayObj);
+    uploadData(kingsbayObj, 'kingsbay');
   }
   if(sd === 0) {
-    strikeEventArr.push(populateStrikeEventObj("No", "None", "Lightning", "0", "0", "0"));
+    var noneObj = populateStrikeEventObj("No", "None", "Lightning", "0", "0", "0")
+    strikeEventArr.push(noneObj);
+    uploadData(noneObj, 'none');
 }
 log('strikeEventArr',strikeEventArr);
+// strikEventArr = JSON.parse(strikeEventArr);
+
+function uploadData(strikeEventArr, location) {
+  request({
+      headers: {
+          'NHJax-API-Key': "test",
+          'Content-Type': 'application/json'
+        },
+      url: server + location,
+      method: "POST",
+      json: strikeEventArr
+  });
+}
+
     // log(strikeEventObject);
     // log(sd, "strikes detected");
     // log(jacksonvilleStrikeCount, "strikes detected near Jacksonville");
@@ -228,5 +257,5 @@ log('strikeEventArr',strikeEventArr);
 // cT = '* 1 * * * *';
 // log(cT)
 };
-new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
-// Lightning()
+//new CronJob('*/1 * * * * ', Lightning, null, true,'America/New_York');
+Lightning()
