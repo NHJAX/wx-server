@@ -2,6 +2,8 @@ var geolib = require('geolib');
 var request = require('request');
 const util = require('util')
 var path = require('path');
+var fs = require('fs');
+
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
 const WORKING_DIR = path.resolve('../secret-config');
