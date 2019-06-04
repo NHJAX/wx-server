@@ -23,6 +23,8 @@ var previousAWOSData = {
   // tempC: 29
 };
 
+var UPDATECOUNTER = 0;//Track how many runs occur between uploads to database. No more than 1 hour between updates
+
 const ALERTBASEURL = "https://api.weather.gov/alerts?active=true&zone=";
 
 module.exports = {
@@ -217,11 +219,13 @@ module.exports = {
 
     data.feels = this.calculateFeelsMethods(data);
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
-    if (data.flagColor === previousFlagColor) {
+    if (data.flagColor === previousFlagColor && UPDATECOUNTER <= 11) {
+      UPDATECOUNTER++;
       console.log('Flag colors match. No new update to database. WBGT ->', data.feels.awbgt);
       console.log("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
-      return data;//'no update';
+      return 'no update';
     } else {
+      UPDATECOUNTER = 0;
       tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
       previousFlagColor = data.flagColor;
       return data;
