@@ -16,7 +16,6 @@ var Facebook_token = API_CONFIG["Facebook_token"];
 
 module.exports = {
   sendTweet: function(status){
-    // var status = 'Lightning detected within ' + body.DistanceKM + 'KM @ ' + body.Time;  // This is the tweet (ie status)
 
     var postBody = {
         'status': status
@@ -43,32 +42,11 @@ module.exports = {
         '',  // post content type ?
         function(err, data, res) {
             if (err) {
-                console.log(err);
+                console.log("err");
             } else {
-                console.log(data);
+                console.log("success");
             }
-        });
-      // FB.setAccessToken('access_token');
-      //
-      // FB.api('', 'post', {
-      //     batch: [
-      //         { method: 'post', relative_url: 'me/feed', body:'message=' + encodeURIComponent(postBody) }
-      //     ]
-      // }, function (res) {
-      //     var res0;
-      //
-      //     if(!res || res.error) {
-      //         console.log(!res ? 'error occurred' : res.error);
-      //         return;
-      //     }
-      //
-      //     res0 = JSON.parse(res[0].body);
-      //
-      //     if(res0.error) {
-      //         console.log(res0.error);
-      //     } else {
-      //         console.log('Post Id: ' + res0.id);
-      //     }
-      // });
+        }
+      );
   }
 }
