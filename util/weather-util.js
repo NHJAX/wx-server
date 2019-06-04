@@ -219,14 +219,29 @@ module.exports = {
 
     data.feels = this.calculateFeelsMethods(data);
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
-    if (data.flagColor === previousFlagColor && UPDATECOUNTER <= 11) {
+    if (data.flagColor === previousFlagColor) {
       UPDATECOUNTER++;
-      console.log('Flag colors match. No new update to database. WBGT ->', data.feels.awbgt);
-      console.log("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
-      return 'no update';
+
+      if (UPDATECOUNTER <= 11) {
+        console.log('Flag colors match. No new update to database. WBGT ->', data.feels.awbgt);
+        console.log("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
+        return 'no update';
+      } else {
+        return nothingToDo();
+      }
+
     } else {
-      UPDATECOUNTER = 0;
       tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
+      
+      //UPDATECOUNTER = 0;
+      //previousFlagColor = data.flagColor;
+      //return data;
+      
+      return nothingToDo();
+    }
+
+    function nothingToDo() {
+      UPDATECOUNTER = 0;
       previousFlagColor = data.flagColor;
       return data;
     }
