@@ -41,9 +41,6 @@ module.exports = {
         postBody,  // post body
         '',  // post content type ?
         function(err, data, res) {
-          console.log(err);
-          console.log(data);
-          console.log(res);
             if (err) {
                 console.log("inside oauth post err ", err);
 
