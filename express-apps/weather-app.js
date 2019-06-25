@@ -180,7 +180,7 @@ function CreateChartData(type,data) {
             var item = doc.data();
             var obj = {};
 
-            obj['wbgt'] = item.aWBGT;
+            obj['wbgt'] = item.feels.awbgt;
             obj['tempF'] = item.tempF;
             obj['humidity'] = item.humidity;
             obj['winds'] = item.winds;
