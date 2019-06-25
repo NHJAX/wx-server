@@ -232,11 +232,6 @@ module.exports = {
 
     } else {
       tobytweeter.sendTweet("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
-      
-      //UPDATECOUNTER = 0;
-      //previousFlagColor = data.flagColor;
-      //return data;
-      
       return nothingToDo();
     }
 
