@@ -245,12 +245,20 @@ module.exports = {
   calculateFlagColor: function (wbgtf) {
     //Flag Color
     if (wbgtf <= 84.99) {
+      data.excerciseWarning = "Discretion required in planning heavy exercise for unacclimated personnel.  This is a marginal heat stress limit for all personnel.";
+      data.workWarning = "Consider 15 minute work breaks per hour for moderate work; 30 minute work breaks per hour for heavy work.";
       return 'green';
     } else if (wbgtf >= 85 && wbgtf <= 87.99) {
+      data.excerciseWarning = "Strenuous exercise and activity (e.g., close order drill) should be curtailed for new and unacclimated personnel during the first 3 weeks of heat exposure.";
+      data.workWarning = "Consider 15 minute work breaks per hour for light work; 30 minute work breaks per hour for moderate work; 45 minute work breaks per hour for heavy work.";
       return 'yellow';
     } else if (wbgtf >= 88 && wbgtf <= 89.99) {
+      data.excerciseWarning = "Strenuous exercise curtailed for all personnel with less than 12 weeks training in hot weather.";
+      data.workWarning = "Consider 30 minute work breaks per hour for light work; 45 minute work breaks per hour for moderate work; heavy work should be postponed until a cooler part of the day.";
       return 'red';
     } else {
+      data.excerciseWarning = "Physical training and strenuous exercise suspended for all personnel (excludes operational commitment not for training purposes).";
+      data.workWarning = "Consider 45 minute work breaks per hour for light work; all other work should be postponed until a cooler part of the day.";
       return 'black';
     }
   },
