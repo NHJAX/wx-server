@@ -218,6 +218,8 @@ module.exports = {
     }
 
     data.feels = this.calculateFeelsMethods(data);
+    data.excerciseWarning = "";
+    data.workWarning = "";
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
     if (data.flagColor === previousFlagColor) {
       UPDATECOUNTER++;
