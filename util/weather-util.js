@@ -220,7 +220,7 @@ module.exports = {
     data.feels = this.calculateFeelsMethods(data);
     data.flagColor = this.calculateFlagColor(data.feels.awbgt);
     data.guidance = this.populateGuidance(data.flagColor);
-    
+
     if (data.flagColor === previousFlagColor) {
       UPDATECOUNTER++;
 
@@ -244,9 +244,8 @@ module.exports = {
     }
   },
 
-  calculateFlagColor: function (data) {
+  calculateFlagColor: function (wbgtf) {
 
-    var wbgtf = data.feels.awbgt;
     //Flag Color
     if (wbgtf <= 84.99) {
       return 'green';
