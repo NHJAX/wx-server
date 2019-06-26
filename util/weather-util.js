@@ -244,7 +244,9 @@ module.exports = {
     }
   },
 
-  calculateFlagColor: function (wbgtf) {
+  calculateFlagColor: function (data) {
+
+    var wbgtf = data.feels.awbgt;
     //Flag Color
     if (wbgtf <= 84.99) {
       data.excerciseWarning = "Discretion required in planning heavy exercise for unacclimated personnel.  This is a marginal heat stress limit for all personnel.";
