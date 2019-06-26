@@ -222,7 +222,7 @@ module.exports = {
     if (data.flagColor === previousFlagColor) {
       UPDATECOUNTER++;
 
-      if (UPDATECOUNTER <= 11) {
+      if (UPDATECOUNTER <= 2) {
         console.log('Flag colors match. No new update to database. WBGT ->', data.feels.awbgt);
         console.log("The current heat stress flag is " + data.flagColor + ". This is valid at " + data.sqlDate + " This will remain valid until a new flag is determined. The current Wet Bulb Globe Tempreature is " + data.feels.awbgt + "F.");
         return 'no update';
