@@ -6,6 +6,7 @@ var fs = require('fs');
 var moment = require('moment');
 var previousLocation = "";
 var tobytweeter = require('./util/Toby.js');
+var counter = 0
 
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
@@ -242,25 +243,51 @@ initialize().then(function(data) {
 }
 // log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
-
-function uploadData(strike, location) {
-  if (location === "none" && location !== previousLocation){
-    tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
-  }else if (location !== previousLocation) {
+if (populateStrikeEventObj.LightningDetected = "Yes"){
+  log('im in');
+  counter++;
+  log('counter first round = ', counter);
+  if (counter === 10){
+    log('counter = 10 resetting')
+    counter = 0;
+  };
+  if (counter === 1){
+    log('detection')
+    log(counter)
     tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+    request({
+        headers: {
+            'NHJax-API-Key': "test",
+            'Content-Type': 'application/json'
+          },
+        url: server + location,
+        method: "POST",
+        json: strike
+    });
   }
-  previousLocation = location;
-
-  request({
-      headers: {
-          'NHJax-API-Key': "test",
-          'Content-Type': 'application/json'
-        },
-      url: server + location,
-      method: "POST",
-      json: strike
-  });
-}
+}else{
+  log('no detection')
+  tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
+};
+//
+// function uploadData(strike, location) {
+//   if (location === "none" && location !== previousLocation){
+//     tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
+//   }else if (location !== previousLocation) {
+//     tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
+//   }
+//   previousLocation = location;
+//
+//   request({
+//       headers: {
+//           'NHJax-API-Key': "test",
+//           'Content-Type': 'application/json'
+//         },
+//       url: server + location,
+//       method: "POST",
+//       json: strike
+//   });
+// }
 
     // log(strikeEventObject);
     // log(sd, "strikes detected");

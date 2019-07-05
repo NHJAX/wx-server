@@ -38,11 +38,11 @@ module.exports = {
     oauth.post('https://api.twitter.com/1.1/statuses/update.json',
         twitter_user_access_token,  // oauth_token (user access token)
         twitter_user_secret,  // oauth_secret (user secret)
-        postBody,  // post 
+        postBody,  // post
         '',  // post content type ?
         function(err, data, res) {
             if (err) {
-                console.log("inside oauth post err ", err);
+                console.log("inside oauth post err ");
 
             } else {
                 console.log(data);
