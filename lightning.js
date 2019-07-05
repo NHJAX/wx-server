@@ -6,7 +6,6 @@ var fs = require('fs');
 var moment = require('moment');
 var previousLocation = "";
 var tobytweeter = require('./util/Toby.js');
-var counter = 0
 
 //location of lightning data from WWLLN
 var url = "https://wwlln.net/new/map/data/current.json";
@@ -17,7 +16,7 @@ let log = console.log
 //Timer
 var CronJob = require('cron').CronJob;
 //Size of station range ring in meters
-var RangeRing = 3218700;
+var RangeRing = 32187;
 //If shit breaks you might want to look at this package as suspect
 // console.log(geolib);
 
@@ -243,55 +242,25 @@ initialize().then(function(data) {
 }
 // log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
+
 function uploadData(strike, location) {
-if (populateStrikeEventObj.LightningDetected = "Yes"){
-  log('im in');
-  if (location === "none"){
-    log('no detection')
+  if (location === "none" && location !== previousLocation){
     tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
-    return;
-  }
-  counter++;
-  log('counter first round = ', counter);
-  if (counter === 10){
-    log('counter = 10 resetting')
-    counter = 0;
-  };
-  if (counter === 1){
-    log('detection')
-    log(counter)
+  }else if (location !== previousLocation) {
     tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
-    request({
-        headers: {
-            'NHJax-API-Key': "test",
-            'Content-Type': 'application/json'
-          },
-        url: server + location,
-        method: "POST",
-        json: strike
-    });
   }
-};
-};
-//
-// function uploadData(strike, location) {
-//   if (location === "none" && location !== previousLocation){
-//     tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
-//   }else if (location !== previousLocation) {
-//     tobytweeter.sendTweet('Lightning detected within 20NM of '+location+' @ ' + strike.TimeStamp);
-//   }
-//   previousLocation = location;
-//
-//   request({
-//       headers: {
-//           'NHJax-API-Key': "test",
-//           'Content-Type': 'application/json'
-//         },
-//       url: server + location,
-//       method: "POST",
-//       json: strike
-//   });
-// }
+  previousLocation = location;
+
+  request({
+      headers: {
+          'NHJax-API-Key': "test",
+          'Content-Type': 'application/json'
+        },
+      url: server + location,
+      method: "POST",
+      json: strike
+  });
+}
 
     // log(strikeEventObject);
     // log(sd, "strikes detected");
