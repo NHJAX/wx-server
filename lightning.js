@@ -17,7 +17,7 @@ let log = console.log
 //Timer
 var CronJob = require('cron').CronJob;
 //Size of station range ring in meters
-var RangeRing = 32187;
+var RangeRing = 3218700;
 //If shit breaks you might want to look at this package as suspect
 // console.log(geolib);
 
