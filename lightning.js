@@ -243,6 +243,7 @@ initialize().then(function(data) {
 }
 // log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
+function uploadData(strike, location) {
 if (populateStrikeEventObj.LightningDetected = "Yes"){
   log('im in');
   counter++;
@@ -268,6 +269,7 @@ if (populateStrikeEventObj.LightningDetected = "Yes"){
 }else{
   log('no detection')
   tobytweeter.sendTweet('No Lightning detected @ ' + strike.TimeStamp);
+};
 };
 //
 // function uploadData(strike, location) {
