@@ -17,6 +17,11 @@ let log = console.log
 var CronJob = require('cron').CronJob;
 //Size of station range ring in meters
 var RangeRing = 32187;
+var jcounter = 0;
+var mcounter = 0;
+var keycounter = 0;
+var acounter = 0;
+var kcounter = 0;
 //If shit breaks you might want to look at this package as suspect
 // console.log(geolib);
 
@@ -211,34 +216,66 @@ initialize().then(function(data) {
 
 
   if(jacksonvilleStrikeCount > 0){
+    jcounter = jcounter + 1;
+    if(jcounter === 1){
     var jaxObj = populateStrikeEventObj("Yes", "Jax", "Lightning", stormDirectionjacksonville, jacksonvilleStrikeCount, stormCenterjacksonville)
     strikeEventArr.push(jaxObj);
     uploadData(jaxObj, 'jax');
+  }else if(jcounter > 1){
+    log("jacksonville lightning already reported");
+  }
   }
   if(mayportStrikeCount > 0){
+    mcounter = mcounter + 1;
+    if(mcounter === 1){
     var mayportObj = populateStrikeEventObj("Yes", "Mayport", "Lightning", stormDirectionmayport, mayportStrikeCount, stormCentermayport)
     strikeEventArr.push(mayportObj);
     uploadData(mayportObj, 'mayport');
+  }else if(mcounter > 1){
+    log("mayport lightning already reported");
+  }
   }
   if(keywestStrikeCount > 0){
+    keycounter = keycounter + 1;
+    if(keycounter === 1){
     var keywestObj = populateStrikeEventObj("Yes", "Keywest", "Lightning", stormDirectionkeywest, keywestStrikeCount, stormCenterkeywest)
     strikeEventArr.push(keywestObj);
     uploadData(keywestObj, 'keywest');
+  }else if(keycounter > 1){
+    log("keywest lightning already reported");
+  }
   }
   if(albanyStrikeCount > 0){
+    acounter = acounter + 1;
+    if(acounter === 1){
     var albanyObj = populateStrikeEventObj("Yes", "Albany", "Lightning", stormDirectionalbany, albanyStrikeCount, stormCenteralbany)
     strikeEventArr.push(albanyObj);
     uploadData(albanyObj, 'albany');
+  }else if(acounter > 1){
+    log("albany lightning already reported");
+  }
   }
   if(kingsbayStrikeCount > 0){
+    kcounter = kcounter + 1;
+    if(kcounter === 1){
     var kingsbayObj = populateStrikeEventObj("Yes", "Kingsbay", "Lightning", stormDirectionkingsbay, kingsbayStrikeCount, stormCenterkingsbay)
     strikeEventArr.push(kingsbayObj);
     uploadData(kingsbayObj, 'kingsbay');
+  }else if(kcounter > 1){
+    log("kingsbay lightning already reported");
+  }
   }
   if(sd === 0) {
+    log("aint no lightning here bro")
     var noneObj = populateStrikeEventObj("No", "None", "Lightning", "0", "0", "0")
     strikeEventArr.push(noneObj);
     uploadData(noneObj, 'none');
+    jcounter = 0;
+    mcounter = 0;
+    keycoutner = 0;
+    acounter = 0;
+    kcounter = 0;
+    log("all counters zeroized")
 }
 // log('strikeEventArr',strikeEventArr);
 // strikEventArr = JSON.parse(strikeEventArr);
